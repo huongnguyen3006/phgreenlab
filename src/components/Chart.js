@@ -1,32 +1,53 @@
-// import React from 'react' 
-// <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-// export default function myChart(){
-//     <canvas id="myChart" style="width:100%;max-width:500px"></canvas>
-// var xValues = [100,200,300,400,500,600,700,800,900,1000];
+import React, { useEffect, useState } from 'react';
+export default function Chart() {
+    const endPoint = "http://127.0.0.1:3000/Datums/DataByDate?DeviceSerialNumber=CA21101007-01&StartDate=2021-11-10&EndDate=2021-12-01"
 
-// new myChart("myChart", {
-//   type: "line",
-//   data: {
-//     labels: xValues,
-//     datasets: [{
-//       data: [860,1140,1060,1060,1070,1110,1330,2210,7830,2478],
-//       borderColor: "red",
-//       fill: false
-//     },{
-//       data: [1600,1700,1700,1900,2000,2700,4000,5000,6000,7000],
-//       borderColor: "green",
-//       fill: false
-//     },{
-//       data: [300,700,2000,5000,6000,4000,2000,1000,200,100],
-//       borderColor: "blue",
-//       fill: false
-//     }]
-//   },
-//   options: {
-//     legend: {display: false}
-//   }
-// });
-//     return(
-//         <h1> chart</h1>
-//     )
-// }
+    const [data, setData] = useState([])
+    // const [json, setJson] = useState(null)
+    const [loading, setLoading] = useState(true)
+
+    useEffect(async () => {
+        const response = await fetch(endPoint, {
+            method: 'GET',
+            headers: { 'Authorization': 'Basic dnZAZ21haWwuY29tOjEyMzQ1Ng==' }
+        })
+
+        const data = await response.toString()
+       
+        // // setJson(json)
+        setData(data)
+        setLoading(loading)
+    }, []);
+    return (
+        <div>
+            <h1> Line chart </h1>
+            <table>
+                <th>
+                    <tr>
+                        <td> Date</td>
+                        <td>Device Serialnumber</td>
+                        <td>SensorType</td>
+                        <td>Value</td>
+                        <td>Unit</td>
+                        <td>Status</td>
+                    </tr>
+                </th>
+                <tbody>
+                    {data.map(a => {
+                        return (
+                            <tr>
+                                <td>{a.Date}</td>
+                                <td>{a.DeviceSerialNumber}</td>
+                                <td>{a.SensorType}</td>
+                                <td>{a.Value}</td>
+                                <td>{a.Unit}</td>
+                                <td>{a.Status}</td>
+                            </tr>
+                        )
+                    })}
+
+                </tbody>
+            </table>
+        </div>
+    )
+}
