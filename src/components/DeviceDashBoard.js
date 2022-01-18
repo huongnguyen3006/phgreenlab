@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import moment from 'moment';
 import '../App.css';
 <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.5/lodash.min.js"></script>;
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet"/>;
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 export default function Devicedb() {
@@ -17,7 +17,7 @@ export default function Devicedb() {
 
 
     useEffect(async () => {
-        const response = await fetch(basedURL+"/Devices", {
+        const response = await fetch(basedURL + "/Devices", {
             method: 'GET',
             headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
         })
@@ -39,62 +39,84 @@ export default function Devicedb() {
             bigdata = [...bigdata, { device: d, deviceData: deviceData }]
 
             setBigdata(bigdata)
-            
+
         }
         setData(data)
         setLoading(false)
     }, []);
+    function doSelect() {
+        let v = document.querySelector('#selDevice').value
+        // alert (v)
+        let ds = document.querySelectorAll('.divDevice')
+        for (let i=0; i<ds.length; i++){
+          ds[i].style.display = 'display';
+        }
+        document.querySelector('#' + v).style.display = 'block';
+    }
     return (
-        <div className="container mt-8">
-            <h1 className="text-muted" style={{padding: 20}}> Online Monitoring System</h1>
-            <table className="table">
-                <thead className="table-head">
-                    <tr>
-                        <td>Description</td>                     
-                        <td> DateSync</td>
-                        <td>Status</td>                 
-                        <td>Parameters</td>
-                        <td>Chart</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {bigdata.map(b => {
-                        let url=`/details?DeviceSerialNumber=${b.device.SerialNumber}`
-                        let url1=`/datadetails?DeviceSerialNumber=${b.device.SerialNumber}`
-                        return (
-                            <tr >
-                                <td>{b.device.Description} <br/>
-                                FriendlyName: {b.device.FriendlyName} <br/>
-                                Model: {b.device.Model} <br/>
-                                SerialNumber: {b.device.SerialNumber} <br/>
-                                Type: {b.device.Type} <br/>
-                                DeviceSerialNumber: {b.device.LabSerialNumber}
-                                </td>
-                               
-                                <td type="datetime">{moment(b.device.DateSync).format("DD/MM/YYYY, HH:mm")}</td>
-                                <td >
-                                <a style={{color:'#087f23', fontWeight:'normal'}} href={url}> {b.device.SerialNumber} /chartbyvalue </a> <br/>
-                                
-                                </td>
-                                <td>
-                                    {b.deviceData.map(a => {
-                                        return (
-                                            <>
-                                                <span className="dot">{(a.SensorType).slice(0,4)} <br/> {a.Value}</span>
-                                                
-                                            </>
-                                        )
-                                    }
-                                    )}
-                                </td>
-                                <td >  <a style={{color:'#087f23', fontWeight:'normal'}} href={url1}>  /chartbydate </a></td>
-                            </tr>
+        <div className="container-dashboard">
+            <h1 className="text-muted" style={{ padding: 20, marginLeft: 150 }}> Online Monitoring System</h1>
+            <select className="formselect" onChange={() => doSelect()} id='selDevice' > 
+                <option> -- </option>
+                {bigdata.map(s => (<option>{s.device.SerialNumber} </option>))}
+            </select> <br/>
+            {bigdata.map(a =>{ 
+                return(
+                    <>
+                    
+            <div className="table-dashboard"  style={{display:'display'}} id={a.device.SerialNumber} type='divDevice'>
+                <table className="table" >
+                    <thead className="table-head">
+                        <tr>
+                            <td>Description</td>
+                            <td> DateSync</td>
+                            <td>Status</td>
+                            <td>Parameters</td>
+                            <td>Chart</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bigdata.map(b => {
+                            let url = `/details?DeviceSerialNumber=${b.device.SerialNumber}`
+                            let url1 = `/datadetails?DeviceSerialNumber=${b.device.SerialNumber}`
+                            return (
+                                <tr >
+                                    <td>{b.device.Description} <br />
+                                        FriendlyName: {b.device.FriendlyName} <br />
+                                        Model: {b.device.Model} <br />
+                                        SerialNumber:{b.device.SerialNumber} <br />
+                                        Type: {b.device.Type} <br />
+                                        DeviceSerialNumber: {b.device.LabSerialNumber}
+                                    </td>
 
-                        )
-                    })}
+                                    <td type="datetime">{moment(b.device.DateSync).format("DD/MM/YYYY, HH:mm")}</td>
+                                    <td >
+                                        <a style={{ color: '#087f23', fontWeight: 'normal' }} href={url}> {b.device.SerialNumber} <br />chartbyAvgValue </a> <br />
 
-                </tbody>
-            </table>
+                                    </td>
+                                    <td>
+                                        {b.deviceData.map(a => {
+                                            return (
+                                                <>
+                                                    <span className="dot">{(a.SensorType).slice(0, 4)} <br /> {a.Value}</span>
+
+                                                </>
+                                            )
+                                        }
+                                        )}
+                                    </td>
+                                    <td >  <a style={{ color: '#087f23', fontWeight: 'normal' }} href={url1}> realvalue</a></td>
+                                </tr>
+
+                            )
+                        })}
+
+                    </tbody>
+                </table>
+            </div>
+            </>
+                )
+            })}
         </div>
 
     )

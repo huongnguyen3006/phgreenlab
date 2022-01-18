@@ -90,7 +90,7 @@ export default function DataDetails() {
 
     }
     return (
-        <div>
+        <div className="datadetails">
             <h4>Lastest 7 Days Data </h4>
             {sensors.map((sensor, index) => {
                 return (

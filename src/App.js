@@ -28,7 +28,7 @@ function App() {
               </Routes>
 
               <Routes>
-             <Route path="/devices" caseSensitive={false} element={ <DeviceDashBoard />} />
+             <Route path="/devicedashboard" caseSensitive={false} element={ <DeviceDashBoard />} />
              </Routes>
             
              <Routes>
