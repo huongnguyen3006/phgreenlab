@@ -115,27 +115,35 @@ export default function Users() {
         result.push({Id: opt.value, SerialNumber: opt.text});
       }
     }
+    // console.log(result);
     return result;
   }
 
   function moveLeft(){
       var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-      console.log(selecteds)
+      // console.log(selecteds)
       var olds = selectedDevices
       olds = olds.concat(selecteds)
       setSelectedDevices(olds);
-
+      
      // setSelectedDevices([...selectedDevices, selecteds])
   }
 
-  function moveRight(index){
-    var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-    console.log(selecteds)
-    var rm = selecteds.splice(index,1)
-  
-    setSelectedDevices(rm)
+  function moveRight(){
+    var newselecteds = getSelectValues( document.getElementById('selSelectedDevice'))
+    var news = selectedDevices
+
+     news = news.filter(item=> item !== newselecteds)
+    // var newss = news.filter(item=> !newselecteds.includes(item))
+    console.log(news);
+   
+    setSelectedDevices(news);
   }
-   document.removeEventListener('click', moveRight);
+  document.removeEventListener('click', moveRight)
+
+
+
+
 
   return (
     <div>

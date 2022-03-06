@@ -126,6 +126,7 @@ export default function StatisticData() {
 
       </div>
       : "Loading"}
+      
     </div>
 
   )

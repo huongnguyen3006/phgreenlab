@@ -46,7 +46,7 @@ export default function DashBoard() {
 
                             {data.children.map(b => {
 
-                                console.log(b)
+                              
                                 let url = `/details?DeviceSerialNumber=${b.name}`
                                 let url1 = `/datadetails?DeviceSerialNumber=${b.name}`
                                 return (
