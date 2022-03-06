@@ -21,6 +21,8 @@ import SignUp from './components/SignUp';
 import Logout from './components/Logout';
 import Users from './components/Users';
 import DashBoard from './components/Dashboard';
+import AssignUser from './components/AssignUser';
+
 
 
 function App() {
@@ -85,6 +87,8 @@ function App() {
            </Routes>
            <Routes>
            <Route path="/users" caseSensitive={false} element={ <Users />}  />
+           <Route path="/assignUser" caseSensitive={false} element={ <AssignUser />}  />
+
            </Routes>
 </div>
 
