@@ -119,6 +119,7 @@ export default function AssignUser() {
     return result;
   }
 
+<<<<<<< HEAD
   function moveRight() {
     var selecteds = getSelectValues(document.querySelector('#selDevice'))
     //remove selecteds from availableDevices
@@ -133,6 +134,15 @@ export default function AssignUser() {
     setSelectedDevices(olds);
 
     // setSelectedDevices([...selectedDevices, selecteds])
+=======
+  function moveLeft(){
+      var selecteds =getSelectValues (document.querySelector('#selDevice')) 
+      console.log(selecteds)
+      var olds = selectedDevices
+      olds = olds.concat(selecteds)
+      setSelectedDevices(olds);
+     // setSelectedDevices([...selectedDevices, selecteds])
+>>>>>>> a8492962c3e1faa01e48a12dd61e5aa6779551c5
   }
 
   function moveLeft() {

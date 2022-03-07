@@ -29,7 +29,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   useEffect(() => {
     document.title = "Online Monitoring System "
-    if (localStorage.getItem('Email') === null || localStorage.getItem('Email') === ""){
+    if (localStorage.getItem('Token') === null || localStorage.getItem('Token') === ""){
        setShowLogin(true)
     }
     else{

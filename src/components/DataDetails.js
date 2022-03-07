@@ -5,27 +5,32 @@ import HighchartsReact from 'highcharts-react-official';
 
 export default function DataDetails() {
 
+    const Token = window.localStorage.getItem('Token')
+
+
     const [data, setData] = useState([])
     const [nresponse, setNresponse] = useState([])
     const [ndata, setNdata] = useState([0])
     const [sensorType, setSensorType] = useState('')
-    const basedURL = "http://thegreenlab.xyz:3000"
-    const localURL = "http://127.0.0.1:3000"
+    const baseURL = "http://thegreenlab.xyz:3000"
+    //const localURL = "http://127.0.0.1:3000"
     const [chartOptions, setChartOptions] = useState([])
     const [receivedDate, setReceivedDate] = useState('')
 
     const [sensors, setSensors] = useState([])
+
+
 
     useEffect(async () => {
         //show()
     }, [])
 
     const loadDevice = async (s) => {
-        const endPoint = `http://thegreenlab.xyz:3000/Devices/Search?SerialNumber=${s}`
+        const endPoint = baseURL + `/Devices/Search?SerialNumber=${s}`
         const res = await fetch(endPoint, {
             // const nresponse = await fetch(`${localURL}/Datums/Last7Days?DeviceSerialNumber=FH21101006&SensorType=pH`,{
             method: 'GET',
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: { 'Authorization': 'Basic ' + Token }
         })
 
         const device = await res.json()
@@ -44,11 +49,11 @@ export default function DataDetails() {
 
         for (let i = 0; i < device.Sensors.length; i++) {
             let sensor = device.Sensors[i]
-            const endPoint = `${basedURL}/Datums/Last7Days?DeviceSerialNumber=${serialNumber}&SensorType=${sensor.SensorType}`
+            const endPoint = `${baseURL}/Datums/Last7Days?DeviceSerialNumber=${serialNumber}&SensorType=${sensor.SensorType}`
             const nresponse = await fetch(endPoint, {
                 // const nresponse = await fetch(`${localURL}/Datums/Last7Days?DeviceSerialNumber=FH21101006&SensorType=pH`,{
                 method: 'GET',
-                headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+                headers: { 'Authorization': 'Basic ' + Token }
             })
             const ndata = await nresponse.json()
 
