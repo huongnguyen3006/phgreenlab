@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faEdit, faTrashAlt, faArrowRight, faArrowLeft, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import { faKeyboard, } from "@fortawesome/free-regular-svg-icons";
+import { counter } from '@fortawesome/fontawesome-svg-core';
 
 export default function AssignUser() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [id, setId] = useState('')
   const [data, setData] = useState([])
-  const [dataDevice, setDataDevice] = useState([])
+  const [availableDevices, setAvailableDevices] = useState([])
   const [selectedDevices, setSelectedDevices] = useState([])
   const [loading, setLoading] = useState(true)
   //const baseURL = 'http://thegreenlab.xyz:3000'
@@ -17,8 +18,6 @@ export default function AssignUser() {
   useEffect(async () => {
     load()
     loadDevice()
-    console.log('abc  xxx')
-
 
   }, [])
 
@@ -44,9 +43,9 @@ export default function AssignUser() {
         'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
       },
     })
-    const dataDevice = await response.json()
+    const availableDevices = await response.json()
     // console.log(dataDevice);
-    setDataDevice(dataDevice)
+    setAvailableDevices(availableDevices)
     setLoading(false)
   }
 
@@ -109,35 +108,44 @@ export default function AssignUser() {
     var result = [];
     var options = select && select.options;
     var opt;
-  
-    for (var i=0, iLen=options.length; i<iLen; i++) {
+
+    for (var i = 0, iLen = options.length; i < iLen; i++) {
       opt = options[i];
-  
+
       if (opt.selected) {
-        result.push({Id: opt.value, SerialNumber: opt.text});
+        result.push({ Id: opt.value, SerialNumber: opt.text });
       }
     }
     return result;
   }
 
-  function moveLeft(){
-      var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-      console.log(selecteds)
-      var olds = selectedDevices
-      olds = olds.concat(selecteds)
-      setSelectedDevices(olds);
+  function moveRight() {
+    var selecteds = getSelectValues(document.querySelector('#selDevice'))
+    //remove selecteds from availableDevices
+    var filterDevices = availableDevices.filter(d => {
+      return !selecteds.find(s => s.Id == d.Id)
+    })
+    console.log(filterDevices);
+    setAvailableDevices(filterDevices)
 
-     // setSelectedDevices([...selectedDevices, selecteds])
+    var olds = selectedDevices
+    olds = olds.concat(selecteds)
+    setSelectedDevices(olds);
+
+    // setSelectedDevices([...selectedDevices, selecteds])
   }
 
-  function moveRight(index){
-    var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-    console.log(selecteds)
-    var rm = selecteds.splice(index,1)
-  
-    setSelectedDevices(rm)
+  function moveLeft() {
+    var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
+    var news = selectedDevices
+
+    var filterDevicesRight = news.filter(d => {
+      return !selecteds.find(s => s.Id == d.Id)
+    })
+    console.log(filterDevicesRight);
+    setSelectedDevices(filterDevicesRight)
   }
-   document.removeEventListener('click', moveRight);
+
 
   return (
     <div>
@@ -154,25 +162,25 @@ export default function AssignUser() {
           <label style={{ width: 100 }}>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <span>Select a device</span>
-        <div className='row'>
+        <span>Select a device</span> 
 
-          <div className='col-md-4' style={{height:500}}>
-            <input type='text'/>
+        <div className='row'>
+          <div className='col-md-4' style={{ height: 150 }}>
+            {/* <input type='text' /> */}
             <select className="form-select" id="selDevice" multiple="muliple">
-              <option > -- </option>
-              {dataDevice.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
+              {availableDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
 
           </div>
-          <div className='col-md-4'>
-            <button className='btn btn-primary' onClick={()=>moveRight()}> <FontAwesomeIcon icon={faArrowLeft} /></button> <br />
-            <button className='btn btn-primary' onClick={()=>moveLeft()} > <FontAwesomeIcon icon={faArrowRight} /></button>
+          <div className='col-md-2' style={{ justifyContent: 'center', alignItems:'center' }}>
+
+            <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
+            <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button> 
           </div>
           <div className='col-md-4'>
-          <input type='text'/>
+            {/* <input type='text' /> */}
             <select className="form-select" id="selSelectedDevice" multiple="muliple">
-              <option > -- </option>
+            
               {selectedDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
           </div>
