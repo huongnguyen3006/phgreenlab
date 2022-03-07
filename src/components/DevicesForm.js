@@ -9,6 +9,9 @@ import moment from 'moment';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 export default function DevicesForm() {
     const datetime = moment()
+    const Token = window.localStorage.getItem('Token')
+
+    
     const [data, setData] = useState([])
     const [id, setId] = useState('')
     const [friendlyName, setFriendlyName] = useState('')
@@ -31,7 +34,7 @@ export default function DevicesForm() {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+                    'Authorization': 'Basic '+ Token
                 },
                 body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type,  LabSerialNumber: labSerialNumber,IsActive: isActive})
             }).then(data => load())
@@ -41,7 +44,7 @@ export default function DevicesForm() {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+                    'Authorization': 'Basic '+ Token
                 },
                 body: JSON.stringify({ Id: id, DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber ,IsActive: isActive})
             }).then(data => load())
@@ -52,7 +55,7 @@ export default function DevicesForm() {
     const load = async () => {
         const response = await fetch(basedURL + "/Devices", {
             method: 'GET',
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: { 'Authorization': 'Basic '+Token }
         })
         const data = await response.json()
         setData(data)
@@ -93,7 +96,7 @@ export default function DevicesForm() {
     const deleteDevice = (Id) => {
         fetch(basedURL + "/Devices" + "/" + Id, {
             method: "DELETE",
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: { 'Authorization': 'Basic '+ Token }
         }).then(data => load())
 
     }
@@ -179,10 +182,10 @@ export default function DevicesForm() {
                             <td>ID</td>
                             <td>DateSync</td>
                             <td>Description</td>
-                            <td> FriendlyName</td>
-                            <td> Model</td>
-                            <td> SerialNumber</td>
-                            <td> Type </td>
+                            <td>FriendlyName</td>
+                            <td>Model</td>
+                            <td>SerialNumber</td>
+                            <td>Type </td>
                             <td>LabSerialNumber</td>
                             <td>IsActive</td>
                             <td>Action</td>

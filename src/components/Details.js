@@ -5,6 +5,8 @@ import HighchartsReact from 'highcharts-react-official';
 import '../App.css';
 export default function Details() {
     // const datetime = moment()
+    const Token = window.localStorage.getItem('Token')
+
     const [data, setData] = useState([])
     const [receivedDate, setReceivedDate] = useState('')
     const [response, setResponse] = useState([])
@@ -14,7 +16,7 @@ export default function Details() {
 
     const [chartOptions, setChartOptions] = useState([])
 
-    const basedURL = "http://thegreenlab.xyz:3000"
+    const baseURL = "http://thegreenlab.xyz:3000"
 
     function today() {
         return new Date();
@@ -68,15 +70,24 @@ export default function Details() {
         // console.log(serialNumber);
 
         // const endPoint = 'http://127.0.0.1:3000/Datums/StatisticDataByDevice?DeviceSerialNumber=CA21101009-03&StartDate=2021-12-01&EndDate=2022-01-06'
-        const endPoint = `${basedURL}/Datums/StatisticDataByDevice?DeviceSerialNumber=${serialNumber}&StartDate=${stDate}&EndDate=${enDate}`
+        const endPoint = `${baseURL}/Datums/StatisticDataByDevice?DeviceSerialNumber=${serialNumber}&StartDate=${stDate}&EndDate=${enDate}`
         const data = await fetch(endPoint, {
             method: 'GET',
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: { 'Authorization': 'Basic '+ Token }
         })
-        const response = await data.json()
-        // 
-        
-        setResponse(response)
+      
+
+        try{
+            const response = await data.json()
+            setResponse(response)
+        }
+        catch(e){
+            console.log('Error '+ e.message)
+            setData([])
+        }
+        finally{
+            //do something here
+        }
 
 
         let sOptions = []

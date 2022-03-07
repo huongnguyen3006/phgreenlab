@@ -11,19 +11,27 @@ export default function DashBoard() {
     const datetime = moment()
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(true)
-    const basedURL = "http://thegreenlab.xyz:3000"
-
+    //const basedURL = "http://thegreenlab.xyz:3000"
+    const basedURL = "http://localhost:3000"
+    const Token = window.localStorage.getItem('Token')
 
 
     useEffect(async () => {
         const response = await fetch(basedURL + "/Datums/LastestDataByAllDevices", {
             method: 'GET',
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: { 'Authorization': 'Basic '+ Token }
         })
-        const data = await response.json()
-
-        setData(data)
-        setLoading(false)
+        try{
+            const data = await response.json()
+            setData(data)
+        }
+        catch(e){
+            console.log('Error '+ e.message)
+            setData({children:[]})
+        }
+        finally{
+            setLoading(false)
+        }
 
 
     }, []);

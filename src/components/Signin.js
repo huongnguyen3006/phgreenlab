@@ -27,8 +27,9 @@ export default function Signin() {
             console.log(data)
 
 
-            localStorage.setItem('Email', email)
-            localStorage.setItem('Password', password)
+            // localStorage.setItem('Email', email)
+            // localStorage.setItem('Password', password)
+            localStorage.setItem('Token',  btoa(email+':'+password))
             window.location = '/dashboard';
         }
 

@@ -126,7 +126,6 @@ export default function AssignUser() {
       var olds = selectedDevices
       olds = olds.concat(selecteds)
       setSelectedDevices(olds);
-
      // setSelectedDevices([...selectedDevices, selecteds])
   }
 

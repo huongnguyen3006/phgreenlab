@@ -6,6 +6,8 @@ import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 
 export default function GroupDevices() {
 
+    const Token = window.localStorage.getItem('Token')
+
     const [data, setData] = useState([])
     const [id, setId] = useState('')
     const [friendlyName, setFriendlyName] = useState('')
