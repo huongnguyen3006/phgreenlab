@@ -6,7 +6,7 @@ export default function SignUp() {
   return (
     <div>
         <Modal>
-      SignUp 
+        SignUp 
       </Modal>
        </div>
   )
