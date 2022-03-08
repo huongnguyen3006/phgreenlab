@@ -20,15 +20,6 @@ export default function Signin() {
         })
         try {
             const data = await response.json()
-            //     try{
-            //    if (isLogin===true){
-            //        alert("Loging is successful")
-
-            console.log(data)
-
-
-            // localStorage.setItem('Email', email)
-            // localStorage.setItem('Password', password)
             localStorage.setItem('Token',  btoa(email+':'+password))
             window.location = '/dashboard';
         }
@@ -36,18 +27,6 @@ export default function Signin() {
         catch (e) {
             console.log(e)
         }
-        //    }
-        //    else{
-        //        console.log("failed");
-        //    }
-        // }
-        // catch (error){
-
-        //        alert("Error")
-
-        // }
-
-
 
     }
 

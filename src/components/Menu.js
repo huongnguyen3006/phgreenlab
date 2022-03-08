@@ -9,8 +9,7 @@ import { faHome, faKey, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg
 
 export default function Menu() {
   const signout = ()=>{
-    localStorage.removeItem('Email')
-    localStorage.removeItem('Password')
+    localStorage.removeItem('Token')
     window.location ='/'
 }
   return (
