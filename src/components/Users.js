@@ -4,6 +4,9 @@ import { faBold, faEdit, faTrashAlt, faArrowRight, faArrowLeft, faArrowsLeftRigh
 import { faKeyboard, } from "@fortawesome/free-regular-svg-icons";
 
 export default function Users() {
+  const Token = window.localStorage.getItem('Token')
+
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [id, setId] = useState('')
@@ -11,8 +14,8 @@ export default function Users() {
   const [dataDevice, setDataDevice] = useState([])
   const [selectedDevices, setSelectedDevices] = useState([])
   const [loading, setLoading] = useState(true)
-  const baseURL = 'http://thegreenlab.xyz:3000'
-  //const baseURL1 = 'http://127.0.0.1:3000'
+  //const baseURL = 'http://thegreenlab.xyz:3000'
+  const baseURL = 'http://127.0.0.1:3000'
 
   useEffect(async () => {
     load()
@@ -23,7 +26,7 @@ export default function Users() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+        'Authorization': 'Basic '+Token
       },
     })
     const data = await response.json()
@@ -48,9 +51,9 @@ export default function Users() {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+          'Authorization': 'Basic '+Token
         },
-        body: JSON.stringify({ Id: id, Email: email, Password: "$2a$10$aiSdpwAyJiR0oQw4KNe0hulvH.ICF1f6MGuWtwQ05l.ymo9HR49Um" })
+        body: JSON.stringify({ Id: id, Email: email, Password: password })
       }).then(data => load())
     }
   }
@@ -67,6 +70,9 @@ export default function Users() {
     setPassword(password)
   }
   const deleteUser = (Id) => {
+
+    if (window.confirm('Do you want to delete?')==true){
+
     fetch(baseURL + "/Users" + "/" + Id, {
       method: 'DELETE',
       headers: {
@@ -75,10 +81,7 @@ export default function Users() {
       },
     }).then(data => load())
   }
-
-  
-
-  
+  }
 
   return (
     <div>
@@ -121,7 +124,7 @@ export default function Users() {
                   <td>{e.Id}</td>
                   <td>{e.Email}</td>
                   <td>
-                    <a href='/assignUser'> Assign User</a>
+                    <a href={"/assignUser?id="+e.Id+"&email="+e.Email}>Assign User</a>
                   </td>
                   <td>
                     <button className="btn btn-success" onClick={() => editUser(e.Id, e.Email, e.Password)}><FontAwesomeIcon icon={faEdit} />Reset password</button> &nbsp;

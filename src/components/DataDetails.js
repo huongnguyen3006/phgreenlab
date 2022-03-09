@@ -7,7 +7,6 @@ export default function DataDetails() {
 
     const Token = window.localStorage.getItem('Token')
 
-
     const [data, setData] = useState([])
     const [nresponse, setNresponse] = useState([])
     const [ndata, setNdata] = useState([0])

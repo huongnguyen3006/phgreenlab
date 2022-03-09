@@ -43,33 +43,11 @@ export default function Details() {
 
     }, []);
 
-    // const show = async () => {
-    //     let queryString = window.location.search
-    //     let params = new URLSearchParams(queryString);
-    //     let serialNumber = params.get("DeviceSerialNumber"); // is the number 123
-    //     let today = new Date()
-    //     let stDate2 = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-    //     // const endPoint = 'http://127.0.0.1:3000/Datums/StatisticDataByDevice?DeviceSerialNumber=CA21101009-03&StartDate=2021-12-01&EndDate=2022-01-06'
-    //     const endPoint = `${basedURL}/Datums/StatisticDataByDevice?DeviceSerialNumber=${serialNumber}&StartDate=${stDate2}&EndDate=${stDate2}`
-    //     console.log(stDate2)
-
-    //     const data = await fetch(endPoint, {
-    //         method: 'GET',
-    //         headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
-    //     })
-    //     const response = await data.json()
-    //     console.log(response)
-    //     setResponse(response)
-    // }
-
 
     const show2 = async () => {
         let queryString = window.location.search
         let params = new URLSearchParams(queryString);
         let serialNumber = params.get("DeviceSerialNumber");
-        // console.log(serialNumber);
-
-        // const endPoint = 'http://127.0.0.1:3000/Datums/StatisticDataByDevice?DeviceSerialNumber=CA21101009-03&StartDate=2021-12-01&EndDate=2022-01-06'
         const endPoint = `${baseURL}/Datums/StatisticDataByDevice?DeviceSerialNumber=${serialNumber}&StartDate=${stDate}&EndDate=${enDate}`
         const data = await fetch(endPoint, {
             method: 'GET',

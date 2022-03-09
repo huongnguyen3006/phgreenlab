@@ -5,104 +5,77 @@ import { faKeyboard, } from "@fortawesome/free-regular-svg-icons";
 import { counter } from '@fortawesome/fontawesome-svg-core';
 
 export default function AssignUser() {
+  const Token = window.localStorage.getItem('Token')
+
   const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [filterText, setFilterText] = useState('')
+
   const [id, setId] = useState('')
-  const [data, setData] = useState([])
   const [availableDevices, setAvailableDevices] = useState([])
   const [selectedDevices, setSelectedDevices] = useState([])
+  const [masterDevices, setMasterDevices] = useState([])
   const [loading, setLoading] = useState(true)
   //const baseURL = 'http://thegreenlab.xyz:3000'
   const baseURL = 'http://127.0.0.1:3000'
 
+
   useEffect(async () => {
-    load()
     loadDevice()
+
+
+    let queryString = window.location.search
+    let params = new URLSearchParams(queryString);
+    let id = params.get("id");
+    let email = params.get("email")
+
+    setId(id)
+    setEmail(email)
+
+    loadUserDevice(id)
 
   }, [])
 
-  const load = async () => {
-    const response = await fetch(baseURL + "/Users", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
-      },
-    })
-    const data = await response.json()
-    // console.log(data);
-    setData(data)
-    setLoading(false)
-  }
 
   const loadDevice = async () => {
     const response = await fetch(baseURL + "/Devices", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+        'Authorization': 'Basic '+ Token
       },
     })
     const availableDevices = await response.json()
     // console.log(dataDevice);
     setAvailableDevices(availableDevices)
+    setMasterDevices(availableDevices)
     setLoading(false)
+
   }
 
-  function save() {
-    if (id === '') {
-      fetch(baseURL + "/Users/Auth/Register", {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({ Email: email, Password: password, userDevices: [] })
-      }).then(data => load())
-    }
-    else {
-      fetch(baseURL + "/Users", {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
-        },
-        body: JSON.stringify({ Id: id, Email: email, Password: password })
-      }).then(data => load())
-    }
-  }
-
-  const addnew = (id, email) => {
-    setId('')
-    setEmail('')
-    setPassword('')
-  }
-
-  const editUser = (id, email, password) => {
-    setEmail(email)
-    setId(id)
-    setPassword(password)
-  }
-  const deleteUser = (Id) => {
-    fetch(baseURL + "/Users" + "/" + Id, {
-      method: 'DELETE',
+  const loadUserDevice = async (id) => {
+    const response = await fetch(baseURL + "/Users/"+id, {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+        'Authorization': 'Basic '+Token
       },
-    }).then(data => load())
+    })
+    const user = await response.json()
+
+    //console.log(user)
+
+    const devices = user.userDevices.map(ud=>{
+      return {Id: ud.DeviceId, SerialNumber: ud.DeviceSerialNumber}
+    })
+
+    //console.log(devices)
+    setSelectedDevices(devices)
+    setLoading(false)
+
   }
 
-  // function doSelect() {
-  //   let v = document.querySelector('#selDevice').value
-  //   alert(v)
-  //   let ds = document.querySelectorAll('.divDevice')
-  //   for (let i = 0; i < ds.length; i++) {
-  //     ds[i].style.display = 'none';
-  //   }
 
-  //   document.querySelector('#' + v).style.display = 'block';
-  // }
+
 
   function getSelectValues(select) {
     var result = [];
@@ -119,43 +92,71 @@ export default function AssignUser() {
     return result;
   }
 
-<<<<<<< HEAD
   function moveRight() {
     var selecteds = getSelectValues(document.querySelector('#selDevice'))
     //remove selecteds from availableDevices
     var filterDevices = availableDevices.filter(d => {
       return !selecteds.find(s => s.Id == d.Id)
     })
-    console.log(filterDevices);
+
     setAvailableDevices(filterDevices)
 
     var olds = selectedDevices
     olds = olds.concat(selecteds)
+
+    //remove duplicate objects
+    olds = olds.filter((value, index, self) =>
+      index === self.findIndex((t) => (
+        t.Id === value.Id && t.SerialNumber === value.SerialNumber
+      ))
+    )
+
     setSelectedDevices(olds);
 
-    // setSelectedDevices([...selectedDevices, selecteds])
-=======
-  function moveLeft(){
-      var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-      console.log(selecteds)
-      var olds = selectedDevices
-      olds = olds.concat(selecteds)
-      setSelectedDevices(olds);
-     // setSelectedDevices([...selectedDevices, selecteds])
->>>>>>> a8492962c3e1faa01e48a12dd61e5aa6779551c5
   }
 
   function moveLeft() {
     var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
-    var news = selectedDevices
 
-    var filterDevicesRight = news.filter(d => {
+    //remove selecteds from availableDevices
+    var filterDevices = selectedDevices.filter(d => {
       return !selecteds.find(s => s.Id == d.Id)
     })
-    console.log(filterDevicesRight);
-    setSelectedDevices(filterDevicesRight)
+    setSelectedDevices(filterDevices)
+
+    var olds = availableDevices
+    olds = olds.concat(selecteds)
+    setAvailableDevices(olds);
   }
 
+  function save() {
+
+    var devices = []
+
+    for(let i=0; i<selectedDevices.length; i++){
+    
+      devices = devices.concat({ User: {Id: id}, Device: {Id: selectedDevices[i].Id}, DeviceSerialNumber: selectedDevices[i].SerialNumber, DeviceId: selectedDevices[i].Id})
+    }
+
+    console.log(devices)
+
+    fetch(baseURL + "/UserDevices/Assign", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic '+Token
+      },
+      body: JSON.stringify(devices)
+    }).then(data => data.json())
+    .then(json=> alert(JSON.stringify(json)))
+  }
+
+  function filterLeft(s) {
+    setFilterText(s)
+    // if (s==='') setAvailableDevices(masterDevices)  
+    var results = masterDevices.filter(d => d.SerialNumber.indexOf(s) >= 0)
+    setAvailableDevices(results)
+  }
 
   return (
     <div>
@@ -168,76 +169,35 @@ export default function AssignUser() {
           <label style={{ width: 100 }}>Email:</label>
           <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div class="mb-3 mt-3">
-          <label style={{ width: 100 }}>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <span>Select a device</span> 
+        <div>Select a device</div>
 
         <div className='row'>
-          <div className='col-md-4' style={{ height: 150 }}>
-            {/* <input type='text' /> */}
-            <select className="form-select" id="selDevice" multiple="muliple">
-              {availableDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
+          <div className='col-md-5'>
+            <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
+            <select className="form-select" id="selDevice" multiple="muliple" size='20'>
+              {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
 
           </div>
-          <div className='col-md-2' style={{ justifyContent: 'center', alignItems:'center' }}>
+          <div className='col-md-2'>
 
             <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
-            <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button> 
+            <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button>
           </div>
-          <div className='col-md-4'>
-            {/* <input type='text' /> */}
-            <select className="form-select" id="selSelectedDevice" multiple="muliple">
-            
-              {selectedDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
+          <div className='col-md-5'>
+            <select className="form-select" id="selSelectedDevice" multiple="muliple" size='20'>
+
+              {selectedDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
           </div>
-
-
-
-        </div>
+     </div>
       </div>
       <div className="btnDeviceForm">
-        <button class="btn btn-primary" style={{ fontWeight: 'bold' }} onClick={() => save()}>Save</button> &nbsp; &nbsp;
-        <button class="btn btn-primary" style={{ fontWeight: 'bold' }} onClick={() => addnew()}>Add new</button>
+        <button class="btn btn-primary"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
+        <button class="btn btn-primary"  onClick={() => document.location = '/Users'}>Back</button> &nbsp; &nbsp;
+
       </div>
 
-      <div className="infoTable">
-        <table className="table table-bordered">
-          <thead style={{ fontWeight: 'bold' }}>
-            <tr>
-              <td> ID</td>
-              <td>Email</td>
-              <td>Devices</td>
-              <td>Action</td>
-            </tr>
-          </thead>
-          <tbody>
-
-            {data.map(e => {
-              return (
-
-                <tr>
-                  <td>{e.Id}</td>
-                  <td>{e.Email}</td>
-                  <td>
-                    <a href='/detail'> Details</a>
-                  </td>
-                  <td>
-                    <button className="btn btn-success" onClick={() => editUser(e.Id, e.Email, e.Password)}><FontAwesomeIcon icon={faEdit} /></button> &nbsp;
-                    <button className="btn btn-success" onClick={() => deleteUser(e.Id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
-                  </td>
-                </tr>
-
-              )
-
-            })}
-
-          </tbody>
-        </table>
-      </div>
     </div>
   )
 }

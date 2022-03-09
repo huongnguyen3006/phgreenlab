@@ -1,7 +1,6 @@
 
 import logo from './logo.jpg';
 import React from "react";
-import Logout from './Logout';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faKey, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
@@ -26,7 +25,7 @@ export default function Menu() {
           <ul class="navbar-nav">
             <li class="nav-item">
               <a style={{ color: '#388e3c', fontSize: 25 }} class="nav-link" href="/"> <FontAwesomeIcon icon={faHome} /> </a>
-            </li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </li>
             <li class="nav-item">
               <a style={{ color: '#388e3c', fontSize: 25 }} class="nav-link" href="/dashboard">OMS</a>
             </li>
@@ -36,38 +35,19 @@ export default function Menu() {
             <li class="nav-item">
               <a style={{ color: '#388e3c', fontSize: 25 }} class="nav-link" href="/users">User</a>
             </li>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          
             <div class="nav-item dropdown">
               <li  >
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{ float: 'right', color: '#388e3c', fontSize: 25 }}>smartpH</a>
                 <ul class="dropdown-menu  " >
                   <li><a class="dropdown-item" href="/signin">Sign In</a></li>
                   <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
-                  {/* <li>
-                  <a class="dropdown-item" href="/signout">
-                        {localStorage.getItem('Email')!== null && localStorage.getItem('Email')!==""? 
-                        <Logout/> : ""} 
-                        <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
-                       
-                    </li> */}
+ 
                   <li>
-                  {localStorage.getItem('Email') !== null && localStorage.getItem('Email') !== "" ?
+                  {localStorage.getItem('Token') !== null && localStorage.getItem('Token') !== "" ?
                     <a class="dropdown-item" href="#" onClick={()=>signout()}>
-                     
-                        
-                      <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
- : ""}
+                   <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
+                  : ""}
                   </li>
 
 
