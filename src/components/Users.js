@@ -29,10 +29,17 @@ export default function Users() {
         'Authorization': 'Basic '+Token
       },
     })
+
     const data = await response.json()
-    // console.log(data);
-    setData(data)
-    setLoading(false)
+    console.log(data)
+    if (typeof data.message !== 'undefined'){
+      console.log(data.message)
+    }
+    else{
+      setData(data)
+      setLoading(false)
+    }
+
   }
 
   function save() {
@@ -77,7 +84,7 @@ export default function Users() {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+        'Authorization': 'Basic '+Token
       },
     }).then(data => load())
   }
