@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { useState } from "react/cjs/react.development"
+import { useState } from "react"
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
