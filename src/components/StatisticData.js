@@ -10,8 +10,12 @@ import '../App.css';
 export default function StatisticData() {
 
   const datetime = moment()
+  const Token = window.localStorage.getItem('Token')
 
-  const endPoint = `http://127.0.0.1:3000/Datums/StatisticData?StartDate=2021-11-01&EndDate=2021-12-31`
+  //const basedURL = "http://127.0.0.1:3000"
+  const baseURL = 'http://thegreenlab.xyz:3000'
+
+  const endPoint = `${basedURL}/Datums/StatisticData?StartDate=2021-11-01&EndDate=2021-12-31`
 
   const [device, setDevice] = useState('')
   const [json, setJson] = useState(null)
@@ -22,7 +26,7 @@ export default function StatisticData() {
     console.log('useeffect')
     const response = await fetch(endPoint, {
       method: 'GET',
-      headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+      headers: { 'Authorization': 'Basic '+ Token }
     })
     const json = await response.json()
 

@@ -11,8 +11,8 @@ export default function DashBoard() {
     const datetime = moment()
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(true)
-    //const basedURL = "http://thegreenlab.xyz:3000"
-    const basedURL = "http://localhost:3000"
+    const basedURL = "http://thegreenlab.xyz:3000"
+    //const basedURL = "http://localhost:3000"
     const Token = window.localStorage.getItem('Token')
 
 

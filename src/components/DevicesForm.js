@@ -23,7 +23,7 @@ export default function DevicesForm() {
     const [labSerialNumber, setLabSerialNumber] = useState('')
     const [dateSync, setDateSync] = useState('')
     const [isActive, setIsActive] = useState('')
-    const basedURL1 = "http://127.0.0.1:3000"
+    //const basedURL1 = "http://127.0.0.1:3000"
     const basedURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
     const [keyword, setKeyword] = useState('')

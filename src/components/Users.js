@@ -14,8 +14,8 @@ export default function Users() {
   const [dataDevice, setDataDevice] = useState([])
   const [selectedDevices, setSelectedDevices] = useState([])
   const [loading, setLoading] = useState(true)
-  //const baseURL = 'http://thegreenlab.xyz:3000'
-  const baseURL = 'http://127.0.0.1:3000'
+  const baseURL = 'http://thegreenlab.xyz:3000'
+  //const baseURL = 'http://127.0.0.1:3000'
 
   useEffect(async () => {
     load()
