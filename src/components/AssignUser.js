@@ -67,7 +67,7 @@ export default function AssignUser() {
           'Content-Type': 'application/json',
           'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
         },
-        body: JSON.stringify({ Id: id, Email: email, Password: password })
+        body: JSON.stringify({ Id: id, Email: email, Password: password, userDevices: [] })
       }).then(data => load())
     }
   }
@@ -93,17 +93,6 @@ export default function AssignUser() {
     }).then(data => load())
   }
 
-  // function doSelect() {
-  //   let v = document.querySelector('#selDevice').value
-  //   alert(v)
-  //   let ds = document.querySelectorAll('.divDevice')
-  //   for (let i = 0; i < ds.length; i++) {
-  //     ds[i].style.display = 'none';
-  //   }
-
-  //   document.querySelector('#' + v).style.display = 'block';
-  // }
-
   function getSelectValues(select) {
     var result = [];
     var options = select && select.options;
@@ -119,7 +108,6 @@ export default function AssignUser() {
     return result;
   }
 
-<<<<<<< HEAD
   function moveRight() {
     var selecteds = getSelectValues(document.querySelector('#selDevice'))
     //remove selecteds from availableDevices
@@ -132,18 +120,8 @@ export default function AssignUser() {
     var olds = selectedDevices
     olds = olds.concat(selecteds)
     setSelectedDevices(olds);
-
-    // setSelectedDevices([...selectedDevices, selecteds])
-=======
-  function moveLeft(){
-      var selecteds =getSelectValues (document.querySelector('#selDevice')) 
-      console.log(selecteds)
-      var olds = selectedDevices
-      olds = olds.concat(selecteds)
-      setSelectedDevices(olds);
-     // setSelectedDevices([...selectedDevices, selecteds])
->>>>>>> a8492962c3e1faa01e48a12dd61e5aa6779551c5
   }
+
 
   function moveLeft() {
     var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
@@ -152,7 +130,7 @@ export default function AssignUser() {
     var filterDevicesRight = news.filter(d => {
       return !selecteds.find(s => s.Id == d.Id)
     })
-    console.log(filterDevicesRight);
+
     setSelectedDevices(filterDevicesRight)
   }
 
@@ -172,31 +150,30 @@ export default function AssignUser() {
           <label style={{ width: 100 }}>Password:</label>
           <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
-        <span>Select a device</span> 
+   
 
         <div className='row'>
+          
           <div className='col-md-4' style={{ height: 150 }}>
+          <span>Select a device</span> 
             {/* <input type='text' /> */}
             <select className="form-select" id="selDevice" multiple="muliple">
               {availableDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
 
           </div>
-          <div className='col-md-2' style={{ justifyContent: 'center', alignItems:'center' }}>
+          <div className='col-md-2' style={{ justifyContent: 'center', alignItems:'center',marginTop: 30, }}>
 
             <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
             <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button> 
           </div>
           <div className='col-md-4'>
-            {/* <input type='text' /> */}
+          <span>Assigned Devices</span> 
             <select className="form-select" id="selSelectedDevice" multiple="muliple">
             
               {selectedDevices.map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
           </div>
-
-
-
         </div>
       </div>
       <div className="btnDeviceForm">

@@ -8,11 +8,11 @@ import { faHome, faKey, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
 export default function Menu() {
-  const signout = ()=>{
-    localStorage.removeItem('Email')
-    localStorage.removeItem('Password')
-    window.location ='/'
-}
+  const signout = () => {
+    localStorage.removeItem('Token')
+    // localStorage.removeItem('Password')
+    window.location = '/'
+  }
   return (
     <nav class="navbar navbar-expand-sm navbar-light">
       <div class="container">
@@ -63,12 +63,10 @@ export default function Menu() {
                        
                     </li> */}
                   <li>
-                  {localStorage.getItem('Email') !== null && localStorage.getItem('Email') !== "" ?
-                    <a class="dropdown-item" href="#" onClick={()=>signout()}>
-                     
-                        
-                      <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
- : ""}
+                    {localStorage.getItem('Token') !== null && localStorage.getItem('Token') !== "" ?
+                      <a class="dropdown-item" href="#" onClick={() => signout()}>
+                        <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
+                      : ""}
                   </li>
 
 
