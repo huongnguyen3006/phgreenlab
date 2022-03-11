@@ -1,8 +1,8 @@
-import { useState } from "react/cjs/react.development"
+import React, { useEffect, useState } from 'react';
 import '../App.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faHockeyPuck, faHome, faKey, faUnlockAlt, faUser } from "@fortawesome/free-solid-svg-icons";
-import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
+import { faEye, faKeyboard } from "@fortawesome/free-regular-svg-icons";
 export default function Signin() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -36,20 +36,30 @@ export default function Signin() {
             <marquee direction="up" className="slogan" >“A PIONEER OF HIGH QUALITY!”</marquee>
             <div className="signin" >
 
-                <h1 style={{ textAlign: 'center', fontFamily: 'inherit', color: '#757575', fontWeight: 'bold', fontSize: '40px' }}>Sign In</h1> <br />
+                <h1 style={{ textAlign: 'center', fontFamily: 'Geogia', color: '#757575', fontWeight: 'bold', fontSize: '40px' }}>Sign In</h1> <br />
                 <div className="signin-content">
-                    <label><FontAwesomeIcon icon={faUser} /></label> <n />
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: 300 }} type="text" placeholder="user, email" /> <br />  <br />
-                    <label><FontAwesomeIcon icon={faKey} /></label> <n />
-                    <input value={password} onChange={(e) => setPassword(e.target.value)} style={{ width: 300 }} type="password" placeholder="password" /> <br /><br />
+                    <div>
+                    <label><FontAwesomeIcon icon={faUser} /></label> &nbsp;&nbsp;&nbsp;
+                    <input value={email} onChange={(e) => setEmail(e.target.value)} style={{ width: 350 , height: 50, fontSize:20, borderRadius:5}} type="text" placeholder="user, email" /> <br />  <br />
+                  </div>  
+                  <div className='password'>
+                    <label style={{marginTop:15}}><FontAwesomeIcon icon={faKey} /></label> &nbsp;&nbsp;&nbsp;
 
-                    <button type="button" onClick={() => login()} >Sign In</button> <br /><br /><br /><br />
+                    <div className='inputIcon' >
+                    <input style={{ width: 350 , height: 50,fontSize:20, borderRadius:5,}} value={password} onChange={(e) => setPassword(e.target.value)}  type="password" placeholder="password" /> &nbsp;&nbsp;&nbsp;
+                    <FontAwesomeIcon icon={faEye} className='iconEye'/>
+                    </div>
+                  </div>  
+                   
+                    </div> <br />
+                
+                    <button type ="button" style={{backgroundColor:'#e0e0e0', fontFamily:'Geogia',fontSize:20, borderRadius:5 }} onClick={() => login()} >Sign In</button> <br /><br /><br /><br /><br />
 
-                    <a style={{ fontWeight: 'normal', color: '#0039cb' }} href="/forgotpassword"><FontAwesomeIcon icon={faUnlockAlt} /> Forgot Password</a> &nbsp;&nbsp;&nbsp;
-                    <a style={{ fontWeight: 'normal', color: '#0039cb' }} href="/signup">Sign Up</a>
+                    <a  className="btnFgSu" href="/forgotpassword"><FontAwesomeIcon icon={faUnlockAlt} /> Forgot Password</a> &nbsp;&nbsp;&nbsp;
+                    <a className="btnFgSu" href="/signup">Sign Up</a>
                 </div>
 
-            </div>
+            
         </div>
     )
 }

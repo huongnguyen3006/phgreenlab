@@ -57,6 +57,7 @@ export default function Details() {
 
         try{
             const response = await data.json()
+            console.log(response);
             setResponse(response)
         }
         catch(e){
@@ -85,6 +86,10 @@ export default function Details() {
             for (var j = 0; j < sensor.data.length; j++) {
                 max.push(sensor.data[j].MAX)
             }
+            let date = []
+            for (var j = 0; j < sensor.data.length; j++) {
+                date.push(sensor.data[j].DateOnly)
+            }
             sOptions.push({
                 chart: {
                     type: 'spline'
@@ -96,7 +101,11 @@ export default function Details() {
                     { name:'Avg', data: temp },
                     { name: 'Min', data: min },
                     { name: 'Max',data: max }
-                ]
+                ],
+                xAxis: {
+                    categories: date
+
+                },
             })
 
         }
@@ -105,12 +114,12 @@ export default function Details() {
 
     return (
         <div className="details">
-            <h2>Details</h2>
+            <h2 style={{ marginLeft: 5 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Details</h2>
             <label>From date:</label> <n />
             <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} /> <n /><n />
             <label>To date:</label><n />
             <input type="date" value={enDate} onChange={(e) => setEnDate(e.target.value)} /> <n />
-            <button onClick={() => show2()}>Show</button>
+            <button className='btn btn-success' style={{fontWeight:'bold'}} onClick={() => show2()}>Show</button>
             {/* <button onClick={() => showtable()}>ShowData</button> */}
             {response.map((a, index) => {
                 return (

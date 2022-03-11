@@ -92,29 +92,29 @@ export default function Users() {
 
   return (
     <div>
+      <h3 style={{ marginLeft: 200 , marginTop:50, fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Users Management</h3>
       <div className="container-user">
-        <h3>Users Management</h3>
         <div class="mb-3 mt-3">
-          <input type="hidden" value={id} onChange={(e) => setId(e.target.value)} />
+          <input type="hidden" className='form-control' value={id} onChange={(e) => setId(e.target.value)} />
         </div>
         <div class="mb-3 mt-3">
-          <label style={{ width: 100 }}>Email:</label>
-          <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <label style={{ width: 85}}>Email:</label>
+          <input type="text" style={{ height: 40, width: 300}}   value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div class="mb-3 mt-3">
-          <label style={{ width: 100 }}>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <label style={{ width: 85 }}>Password:</label>
+          <input type="password" style={{ height: 40, width: 300}}  value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
       
       </div>
-      <div className="btnDeviceForm">
-        <button class="btn btn-primary" style={{ fontWeight: 'bold' }} onClick={() => save()}>Save</button> &nbsp; &nbsp;
-        <button class="btn btn-primary" style={{ fontWeight: 'bold' }} onClick={() => addnew()}>Add new</button>
+      <div className="btnUser">
+        <button class="btn btn-success" style={{ fontWeight: 'bold'}} onClick={() => save()}>Save</button> &nbsp; &nbsp;
+        <button class="btn btn-success" style={{ fontWeight: 'bold' }} onClick={() => addnew()}>Add new</button>
       </div>
 
       <div className="infoTable">
         <table className="table table-bordered">
-          <thead style={{ fontWeight: 'bold' }}>
+          <thead className="table-head">
             <tr>
               <td>ID</td>
               <td>Email</td>
@@ -134,7 +134,7 @@ export default function Users() {
                     <a href={"/assignUser?id="+e.Id+"&email="+e.Email}>Assign User</a>
                   </td>
                   <td>
-                    <button className="btn btn-success" onClick={() => editUser(e.Id, e.Email, e.Password)}><FontAwesomeIcon icon={faEdit} />Reset password</button> &nbsp;
+                    <button className="btn btn-success" onClick={() => editUser(e.Id, e.Email, e.Password)}><FontAwesomeIcon icon={faEdit} /> Reset password</button> &nbsp;
                     <button className="btn btn-success" onClick={() => deleteUser(e.Id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
                   </td>
                 </tr>

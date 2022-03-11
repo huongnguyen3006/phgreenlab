@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
@@ -123,7 +123,7 @@ export default function DevicesForm() {
 
     return (
         <div id="devicesform" className="container-labs">
-            <h3 style={{ marginLeft: 80 , fontWeight:'bold'}}>Devices</h3>
+            <h3  style={{ marginLeft: 80 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Devices</h3>
             
                 <div className="form">
                     <div className="formg1">
@@ -166,8 +166,8 @@ export default function DevicesForm() {
                     </div>
                 </div>
                 <div className="btnDeviceForm">
-                    <button class="btn btn-primary" style={{fontWeight:'bold'}} onClick={() => save()}>Save</button> &nbsp; &nbsp;
-                    <button class="btn btn-primary" style={{fontWeight:'bold'}} onClick={() => addnew()}>Add new</button> 
+                    <button class="btn btn-success" style={{fontWeight:'bold'}} onClick={() => save()}>Save</button> &nbsp; &nbsp;
+                    <button class="btn btn-success" style={{fontWeight:'bold'}} onClick={() => addnew()}>Add new</button> 
                 </div>
          
                 {/* <div>
@@ -175,9 +175,9 @@ export default function DevicesForm() {
                     <button  onClick={() => search()}>Search</button> 
                 </div> */}
 
-            <div className="infoTable">
+            <div className="infoDeviceTable">
                 <table className="table table-bordered">
-                    <thead style={{fontWeight:'bold'}}>
+                    <thead className="table-head">
                         <tr>
                             <td>ID</td>
                             <td>DateSync</td>
