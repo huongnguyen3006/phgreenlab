@@ -1,6 +1,6 @@
-//remmeber this import
-import { useEffect } from "react"
-import { useState } from "react"
+
+import React, { useEffect, useState } from 'react';
+
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 
@@ -69,14 +69,14 @@ export default function DataDetails() {
             }
             options.push({
                 chart: {
-                    type: 'spline'
+                    type: 'spline',
                 },
                 title: {
                     text: stitle
                 },
                 series: [
                     {
-                        name: stitle, data: values
+                        name: stitle, data: values, color:'green',
                     }
                 ],
                 xAxis: {
@@ -96,8 +96,8 @@ export default function DataDetails() {
     }
     return (
         <div className="datadetails">
-            <h4>Lastest 7 Days Data </h4>
-            <button className='btn btn-primary' onClick={()=>show()}>Show</button>
+            <h4 style={{ marginLeft: 5 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Lastest 7 Days Data </h4>
+            <button className='btn btn-success' style={{fontWeight:'bold'}} onClick={()=>show()}>Show</button>
             {sensors.map((sensor, index) => {
                 return (
                    <div>
