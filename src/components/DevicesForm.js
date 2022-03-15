@@ -3,10 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 import moment from 'moment';
-
-
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+
 export default function DevicesForm() {
     const datetime = moment()
     const Token = window.localStorage.getItem('Token')
@@ -122,7 +123,7 @@ export default function DevicesForm() {
 
 
     return (
-        <div id="devicesform" className="container-labs">
+        <div id="devicesform" className="container-fluid">
             <h3 >Devices</h3>
             
                 <div className="form">
@@ -131,37 +132,37 @@ export default function DevicesForm() {
                             <input type="hidden" className="form-control" value={id} onChange={(e) => setId(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>DateSync:</label>
-                            <input style={{width:500}} type="datetime" className="form-control" value={dateSync} onChange={(e) => setDateSync(e.target.value)} />
+                            <label >DateSync:</label>
+                            <input  type="datetime" className="form-control" value={dateSync} onChange={(e) => setDateSync(e.target.value)} />
                         </div>
-                        <label style={{width:500, fontWeight:'bold'}}>Description:</label>
-                        <input style={{width:500}} type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <label >Description:</label>
+                        <input  type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>FriendlyName:</label>
-                            <input style={{width:500}} type="text" className="form-control" value={friendlyName} onChange={(e) => setFriendlyName(e.target.value)} />
+                            <label>FriendlyName:</label>
+                            <input  type="text" className="form-control" value={friendlyName} onChange={(e) => setFriendlyName(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>Model:</label>
-                            <input style={{width:500}} type="text" className="form-control" value={model} onChange={(e) => setModel(e.target.value)} />
+                            <label >Model:</label>
+                            <input  type="text" className="form-control" value={model} onChange={(e) => setModel(e.target.value)} />
                         </div>
                     </div>
                     <div className="formg2">
 
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>SerialNumber:</label>
-                            <input style={{width:500}} type="text" className="form-control" value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} />
+                            <label >SerialNumber:</label>
+                            <input  type="text" className="form-control" value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>Type:</label>
-                            <input style={{width:500}} type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} />
+                            <label >Type:</label>
+                            <input  type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
-                            <label style={{width:500, fontWeight:'bold'}}>LabSerialNumber:</label>
-                            <input style={{width:500}} type="text" className="form-control" value={labSerialNumber} onChange={(e) => setLabSerialNumber(e.target.value)} />
+                            <label >LabSerialNumber:</label>
+                            <input type="text" className="form-control" value={labSerialNumber} onChange={(e) => setLabSerialNumber(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
-                            <label style={{fontWeight:'bold'}}>IsActive:</label> &nbsp;
-                            <input style={{width:20, height:20, fontWeight:'bold'}} type="checkbox" id="isActive" value="yes" /> 
+                            <label >IsActive:</label> &nbsp;
+                            <input  type="checkbox" id="isActive" value="yes" /> 
                         </div>
                     </div>
                 </div>

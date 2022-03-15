@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 export default function DataDetails() {
 
     const Token = window.localStorage.getItem('Token')
@@ -97,7 +99,7 @@ export default function DataDetails() {
     return (
         <div className="datadetails">
             <h4 >Lastest 7 Days Data </h4>
-            <button className='btn btn-success' style={{fontWeight:'bold'}} onClick={()=>show()}>Show</button>
+            <button className='btn btn-success' onClick={()=>show()}>Show</button>
             {sensors.map((sensor, index) => {
                 return (
                    <div>

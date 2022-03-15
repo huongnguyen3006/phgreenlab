@@ -200,6 +200,7 @@ margin-bottom: 30px;
 margin-left: 65px;
 background-color: #d2d4d6c2;
 padding: 30px;
+width: 1100px;
 
 }
 .formg1{
@@ -207,7 +208,7 @@ padding: 30px;
   margin-right: 50px;
 }
 
-.table-groupdevices{
+.form-groupdevices{
     border: 10px;
     border-collapse: collapse;
     border-color: #4caf50;
