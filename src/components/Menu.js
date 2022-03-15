@@ -41,8 +41,8 @@ export default function Menu() {
           
             <div class="nav-item dropdown">
               <li  >
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{ float: 'right', color: 'white',  }}>smartpH</a>
-                <ul class="dropdown-menu  " >
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{color: 'white',  }}>smartpH</a>
+                <ul class="dropdown-menu" >
                   <li><a class="dropdown-item" href="/signin">Sign In</a></li>
                   <li><a class="dropdown-item" href="/signup">Sign Up</a></li>
  
