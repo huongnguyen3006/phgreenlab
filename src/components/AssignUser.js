@@ -138,7 +138,7 @@ export default function AssignUser() {
       devices = devices.concat({ User: {Id: id}, Device: {Id: selectedDevices[i].Id}, DeviceSerialNumber: selectedDevices[i].SerialNumber, DeviceId: selectedDevices[i].Id})
     }
 
-    console.log(devices)
+    // console.log(devices)
 
     fetch(baseURL + "/UserDevices/Assign", {
       method: 'POST',
@@ -166,7 +166,7 @@ export default function AssignUser() {
           <input type="hidden" value={id} onChange={(e) => setId(e.target.value)} />
         </div>
         <div class="mb-3 mt-3">
-          <label style={{ width: 100 }}>Email:</label>
+          <label >Email:</label>
           <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div>Select a device</div>
