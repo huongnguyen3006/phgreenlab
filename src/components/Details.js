@@ -3,6 +3,9 @@ import moment from "moment";
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import '../App.css';
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 export default function Details() {
     // const datetime = moment()
     const Token = window.localStorage.getItem('Token')
@@ -119,12 +122,12 @@ export default function Details() {
             <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} /> <n /><n />
             <label>To date:</label><n />
             <input type="date" value={enDate} onChange={(e) => setEnDate(e.target.value)} /> <n />
-            <button className='btn btn-success' style={{fontWeight:'bold'}} onClick={() => show2()}>Show</button>
+            <button className='btn btn-success'  onClick={() => show2()}>Show</button>
             {/* <button onClick={() => showtable()}>ShowData</button> */}
             {response.map((a, index) => {
                 return (
                     <>
-                        <p style={{ fontWeight: 'bold', color: '#087f23', margin: 10 }}>{a.sensorType}</p>
+                        <p >{a.sensorType}</p>
                         <div className="table-details">
                             <div className="table-value">
                                 <table className="table table-hover" >

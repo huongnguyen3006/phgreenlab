@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBold, faEdit, faTrashAlt, faArrowRight, faArrowLeft, faArrowsLeftRight } from "@fortawesome/free-solid-svg-icons";
 import { faKeyboard, } from "@fortawesome/free-regular-svg-icons";
-
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
+<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 export default function Users() {
   const Token = window.localStorage.getItem('Token')
 
@@ -92,24 +94,24 @@ export default function Users() {
 
   return (
     <div>
-      <h3 style={{ marginLeft: 200 , marginTop:50, fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Users Management</h3>
+      <h3 >Users Management</h3>
       <div className="container-user">
         <div class="mb-3 mt-3">
           <input type="hidden" className='form-control' value={id} onChange={(e) => setId(e.target.value)} />
         </div>
         <div class="mb-3 mt-3">
-          <label style={{ width: 85}}>Email:</label>
-          <input type="text" style={{ height: 40, width: 300}}   value={email} onChange={(e) => setEmail(e.target.value)} />
+          <label >Email:</label>
+          <input type="text"   value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
         <div class="mb-3 mt-3">
-          <label style={{ width: 85 }}>Password:</label>
-          <input type="password" style={{ height: 40, width: 300}}  value={password} onChange={(e) => setPassword(e.target.value)} />
+          <label >Password:</label>
+          <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
       
       </div>
       <div className="btnUser">
-        <button class="btn btn-success" style={{ fontWeight: 'bold'}} onClick={() => save()}>Save</button> &nbsp; &nbsp;
-        <button class="btn btn-success" style={{ fontWeight: 'bold' }} onClick={() => addnew()}>Add new</button>
+        <button class="btn btn-success"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
+        <button class="btn btn-success"  onClick={() => addnew()}>Add new</button>
       </div>
 
       <div className="infoTable">
