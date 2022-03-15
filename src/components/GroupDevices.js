@@ -7,127 +7,116 @@ import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 export default function GroupDevices() {
 
     const Token = window.localStorage.getItem('Token')
-
+console.log(Token);
     const [data, setData] = useState([])
     const [id, setId] = useState('')
-    const [friendlyName, setFriendlyName] = useState('')
+    const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [model, setModel] = useState('')
-    const [serialNumber, setSerialNumber] = useState('')
-    const [type, setType] = useState('')
-    const [labId, setLabId] = useState('')
-    const [isActive, setIsActive] = useState('')
+ 
 
-    //const endPoint = "http://127.0.0.1:4000/Labs"
-
-    const basedURL = "http://thegreenlab.xyz:3000"
+    const baseURL = "http://127.0.0.1:3000"
+   
+    // const baseURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
 
     const save = () => {
         if (id === '') {
-            fetch(basedURL + "/Devices", {
+            fetch(baseURL + "/Devicegroup", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+                    'Authorization': 'Basic '+Token
                 },
-                body: JSON.stringify({ description: description, friendlyName: friendlyName, model: model, serialNumber: serialNumber, type: type, isActive: isActive })
-            }).then(data => setData(data))
+                body: JSON.stringify({  Name: name ,Description: description,})
+            }).then(data => load())
         }
         else {
-            fetch(basedURL + "/Devices", {
+            fetch(baseURL + "/Devicegroup", {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz'
+                    'Authorization':'Basic '+Token
                 },
-                body: JSON.stringify({ id: id, description: description, friendlyName: friendlyName, model: model, serialNumber: serialNumber, type: type, isActive: isActive })
-            }).then(data => setData(data))
+                body: JSON.stringify({ Id: id,  Name: name, description: description})
+            }).then(data => load())
 
         }
 
     }
-
-
-    useEffect(async () => {
-        const response = await fetch(basedURL + "/Devices", {
+   const load = (async()=>{
+        const response = await fetch(baseURL + "/Devicegroup", {
             method: 'GET',
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+            headers: {  
+            'Authorization': 'Basic dnZAZ21haWwuY29tOjEyMzQ1Ng=='}
+            //  'Authorization': 'Basic' + Token}
         })
         const data = await response.json()
         setData(data)
         setLoading(false)
+    })
+
+
+    useEffect(async () => {
+       load()
     }, []);
 
-    // function toggle(checked) {
-    //     var elm = document.getElementById('checkbox');
-    //     if (checked != elm.checked) {
-    //       elm.click();
-    //     }
-    //   }
+
+
     function myCheck() {
         var x = document.getElementById("checked").checked;
         document.getElementById("demo").innerHTML = x;
     }
 
-    const editDevice = (description, friendlyName, model, serialNumber, type, isActive) => {
+    const editDevice = (id, description, name) => {
         setDescription(description)
-        setFriendlyName(friendlyName)
-        setModel(model)
-        setSerialNumber(serialNumber)
-        setType(type)
-        setIsActive(isActive)
+        setName(name)
+        setId(id)
 
     }
 
     const deleteDevice = (id) => {
-        fetch(basedURL + "/Devices" + "/" + id, {
+        fetch(baseURL + "/Devices" + "/" + id, {
             method: "DELETE",
-            headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
-        }).then(data => setData(data))
+            headers: { 'Authorization': 'Basic' +Token }
+        }).then(data => load())
 
     }
     const addnew = () => {
         setDescription('')
-        setFriendlyName('')
-        setModel('')
-        setSerialNumber('')
-        setType('')
-        setIsActive('')
+        setName('')
         setId('')
     }
 
 
     return (
-        <div className="container-labs">
+        <div className="container">
             <h3>Group Devices</h3>
+            <div className='form'>
+            <div class="mb-3 mt-3">
             <input type="hidden" className="form-control" value={id} onChange={(e) => setId(e.target.value)} />
-
+</div>
+<div class="mb-3 mt-3">
+            <label>Name:</label>
+            <input type="text" className="form-control" value={name} onChange={(e) => setName(e.target.value)} />
+</div>
+<div class="mb-3 mt-3">
             <label>Description:</label>
             <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+</div>
 
-            <label>FriendlyName:</label>
-            <input type="text" className="form-control" value={friendlyName} onChange={(e) => setFriendlyName(e.target.value)} />
+           
+            <button class="btn btn-success" onClick={() => save()}>Save</button> <n/>
+            <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
 
-            <label>Model:</label>
-            <input type="text" className="form-control" value={model} onChange={(e) => setModel(e.target.value)} />
-
-            <label>SerialNumber:</label>
-            <input type="text" className="form-control" value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} />
-
-            <label>Type:</label>
-            <input type="text" className="form-control" value={type} onChange={(e) => setType(e.target.value)} />
-
-            <label>IsActive:</label>
-            <input type="checkbox" id="checked" /> <br />
-            <button onClick={() => save()}>Save</button> <n/>
-            <button onClick={() => addnew()}>Add new</button>
-            <div className="table-gdevices">
+            </div>
+            <div className="table">
 
                 <table className="table table-hover">
                     <thead>
                         <tr>
-                            <td>All Devices</td>
+                            <td>Name</td>
+                            <td>Description</td>
+                            
                         </tr>
                     </thead>
 
@@ -136,16 +125,9 @@ export default function GroupDevices() {
                             return (
                                 <>
                                     <tr>
-                                        <td>  <input type="checkbox" id="checked" /> </td>
-                                        <td>
-
-                                            FriendlyName: {e.FriendlyName} <br />
-                                            Description: {e.Description}<br />
-                                            Model:{e.Model}<br />
-                                            SerialNumber: {e.SerialNumber}<br />
-                                            Type: {e.Type}<br />
-                                            {e.IsActive}
-                                        </td>
+                                        <td> {e.Id}</td>
+                                        <td>{e.Name}</td>
+                                        <td>{e.Description} </td>
 
 
                                         <td>
@@ -154,7 +136,6 @@ export default function GroupDevices() {
                                             <button className="btn btn-success" onClick={() => deleteDevice(e._id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
                                         </td>
                                     </tr>
-                                    {/* <Link href={`/wpa/${e.id}`}>{e.title}</Link> */}
                                 </>
                             )
                         }

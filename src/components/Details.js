@@ -114,7 +114,7 @@ export default function Details() {
 
     return (
         <div className="details">
-            <h2 style={{ marginLeft: 5 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Details</h2>
+            <h2 >Details</h2>
             <label>From date:</label> <n />
             <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} /> <n /><n />
             <label>To date:</label><n />

@@ -37,7 +37,7 @@ export default function DashBoard() {
     }, []);
     return (
         <div className="container mt-8">
-            <h1 className="text-muted" style={{ padding: 20 }}> Online Monitoring System</h1>
+            <h1 className="text-muted" > Online Monitoring System</h1>
             <div>
                 {loading ? "Loading...." :
                     <table className="table">
@@ -85,9 +85,9 @@ export default function DashBoard() {
                                             )}
                                         </td>
                                         <td >
-                                            <a style={{ color: '#087f23', fontWeight: 'normal' }} href={url1}>Chart By Date</a>
+                                            <a  href={url1}>Chart By Date</a>
                                             <br/>
-                                            <a style={{ color: '#087f23', fontWeight: 'normal' }} href={url}>
+                                            <a  href={url}>
                                                 Chart By Value </a> <br />
                                         </td>
                                     </tr>

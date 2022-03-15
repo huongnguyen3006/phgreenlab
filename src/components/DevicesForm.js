@@ -123,7 +123,7 @@ export default function DevicesForm() {
 
     return (
         <div id="devicesform" className="container-labs">
-            <h3  style={{ marginLeft: 80 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Devices</h3>
+            <h3 >Devices</h3>
             
                 <div className="form">
                     <div className="formg1">
@@ -166,8 +166,8 @@ export default function DevicesForm() {
                     </div>
                 </div>
                 <div className="btnDeviceForm">
-                    <button class="btn btn-success" style={{fontWeight:'bold'}} onClick={() => save()}>Save</button> &nbsp; &nbsp;
-                    <button class="btn btn-success" style={{fontWeight:'bold'}} onClick={() => addnew()}>Add new</button> 
+                    <button class="btn btn-success"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
+                    <button class="btn btn-success"  onClick={() => addnew()}>Add new</button> 
                 </div>
          
                 {/* <div>

@@ -24,21 +24,24 @@ export default function Menu() {
         <div class="collapse navbar-collapse" id="collapsibleNavbar" >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a style={{ color: 'white', fontSize: 25 }} class="nav-link" href="/"> <FontAwesomeIcon icon={faHome} /> </a>
+              <a style={{ color: 'white', }} class="nav-link" href="/"> <FontAwesomeIcon icon={faHome} /> </a>
             </li>
             <li class="nav-item">
-              <a style={{ color: 'white', fontSize: 25 }} class="nav-link" href="/dashboard">OMS</a>
+              <a style={{ color: 'white', }} class="nav-link" href="/dashboard">OMS</a>
             </li>
             <li class="nav-item">
-              <a style={{ color: 'white', fontSize: 25 }} class="nav-link" href="/devicesform">Device</a>
+              <a style={{ color: 'white', }} class="nav-link" href="/devicesform">Device</a>
             </li>
             <li class="nav-item">
-              <a style={{ color: 'white', fontSize: 25 }} class="nav-link" href="/users">User</a>
+              <a style={{ color: 'white', }} class="nav-link" href="/devicegroup">Devices Group</a>
+            </li>
+            <li class="nav-item">
+              <a  class="nav-link" href="/users">User</a>
             </li>
           
             <div class="nav-item dropdown">
               <li  >
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{ float: 'right', color: 'white', fontSize: 25 }}>smartpH</a>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" style={{ float: 'right', color: 'white',  }}>smartpH</a>
                 <ul class="dropdown-menu  " >
                   <li><a class="dropdown-item" href="/signin">Sign In</a></li>
                   <li><a class="dropdown-item" href="/signup">Sign Up</a></li>

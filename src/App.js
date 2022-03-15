@@ -62,7 +62,7 @@ function App() {
             </Routes>
 
             <Routes>
-              <Route path="/groupdevices" caseSensitive={false} element={<GroupDevices />} />
+              <Route path="/devicegroup" caseSensitive={false} element={<GroupDevices />} />
             </Routes>
 
             <Routes>

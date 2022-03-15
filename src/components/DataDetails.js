@@ -96,7 +96,7 @@ export default function DataDetails() {
     }
     return (
         <div className="datadetails">
-            <h4 style={{ marginLeft: 5 , fontWeight:'bold', color:'#707070', fontFamily:'Geogia'}}>Lastest 7 Days Data </h4>
+            <h4 >Lastest 7 Days Data </h4>
             <button className='btn btn-success' style={{fontWeight:'bold'}} onClick={()=>show()}>Show</button>
             {sensors.map((sensor, index) => {
                 return (

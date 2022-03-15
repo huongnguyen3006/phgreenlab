@@ -160,7 +160,7 @@ export default function AssignUser() {
 
   return (
     <div>
-      <div className="container-user">
+      <div className="container">
         <h3>Users Management</h3>
         <div class="mb-3 mt-3">
           <input type="hidden" value={id} onChange={(e) => setId(e.target.value)} />
