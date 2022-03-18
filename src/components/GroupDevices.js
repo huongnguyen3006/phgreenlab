@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faEdit, faTrashAlt , faArrowRight, faArrowLeft,} from "@fortawesome/free-solid-svg-icons";
+import { faBold, faEdit, faTrashAlt, faArrowRight, faArrowLeft, faArrowsLeftRight, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
@@ -17,6 +17,10 @@ export default function GroupDevices() {
     const [availableDevices, setAvailableDevices] = useState([])
     const [selectedDevices, setSelectedDevices] = useState([])
     const [masterDevices, setMasterDevices] = useState([])
+    const [listSelected, setListSelected]=useState([])
+    const [isOpen, setIsOpen]= useState(false)
+    const [isSelected, setIsSelected]=useState(false)
+    const [placeholder, setPlaceholder]=useState('Please select item')
 
     const baseURL = "http://127.0.0.1:3000"
 
@@ -102,65 +106,90 @@ export default function GroupDevices() {
         setLoading(false)
     
       }
-      function getSelectValues(select) {
-        var result = [];
-        var options = select && select.options;
-        var opt;
-    
-        for (var i = 0, iLen = options.length; i < iLen; i++) {
-          opt = options[i];
-    
-          if (opt.selected) {
-            result.push({ Id: opt.value, SerialNumber: opt.text });
-          }
+      const removeItem =()=>{
+alert('Xoas')
+      }
+      const handleIsOpen =()=>{
+setIsOpen(true)
+setAvailableDevices(availableDevices)
+      }
+
+      const handleSelect=()=>{
+        if (!setIsOpen) {
+          document.addEventListener('click', handleOutsideClick(), false);
+        } else {
+          document.removeEventListener('click', handleOutsideClick(), false);
         }
-        return result;
       }
-    
-      function moveRight() {
-        var selecteds = getSelectValues(document.querySelector('#selDevice'))
-        //remove selecteds from availableDevices
-        var filterDevices = availableDevices.filter(d => {
-          return !selecteds.find(s => s.Id == d.Id)
-        })
-    
-        setAvailableDevices(filterDevices)
-    
-        var olds = selectedDevices
-        olds = olds.concat(selecteds)
-    
-        //remove duplicate objects
-        olds = olds.filter((value, index, self) =>
-          index === self.findIndex((t) => (
-            t.Id === value.Id && t.SerialNumber === value.SerialNumber
-          ))
-        )
-    
-        setSelectedDevices(olds);
-    
+
+     const handleOutsideClick = () => {
+        handleSelect();
+      };
+
+    const filteredData=()=>{
+      availableDevices =[]
+        setIsSelected(true)
+        return availableDevices.filter(item => !isSelected.find(title => item.SerialNumber === title))
       }
+      // function getSelectValues(select) {
+      //   var result = [];
+      //   var options = select && select.options;
+      //   var opt;
     
-      function moveLeft() {
-        var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
+      //   for (var i = 0, iLen = options.length; i < iLen; i++) {
+      //     opt = options[i];
     
-        //remove selecteds from availableDevices
-        var filterDevices = selectedDevices.filter(d => {
-          return !selecteds.find(s => s.Id == d.Id)
-        })
-        setSelectedDevices(filterDevices)
+      //     if (opt.selected) {
+      //       result.push({ Id: opt.value, SerialNumber: opt.text });
+      //     }
+      //   }
+      //   return result;
+      // }
     
-        var olds = availableDevices
-        olds = olds.concat(selecteds)
-        setAvailableDevices(olds);
-      }
-      function filterLeft(s) {
-        setFilterText(s)
-        // if (s==='') setAvailableDevices(masterDevices)  
-        var results = masterDevices.filter(d => d.SerialNumber.indexOf(s) >= 0)
-        setAvailableDevices(results)
-      }
+      // function moveRight() {
+      //   var selecteds = getSelectValues(document.querySelector('#selDevice'))
+      //   //remove selecteds from availableDevices
+      //   var filterDevices = availableDevices.filter(d => {
+      //     return !selecteds.find(s => s.Id == d.Id)
+      //   })
+    
+      //   setAvailableDevices(filterDevices)
+    
+      //   var olds = selectedDevices
+      //   olds = olds.concat(selecteds)
+    
+      //   //remove duplicate objects
+      //   olds = olds.filter((value, index, self) =>
+      //     index === self.findIndex((t) => (
+      //       t.Id === value.Id && t.SerialNumber === value.SerialNumber
+      //     ))
+      //   )
+    
+      //   setSelectedDevices(olds);
+    
+      // }
+    
+      // function moveLeft() {
+      //   var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
+    
+      //   //remove selecteds from availableDevices
+      //   var filterDevices = selectedDevices.filter(d => {
+      //     return !selecteds.find(s => s.Id == d.Id)
+      //   })
+      //   setSelectedDevices(filterDevices)
+    
+      //   var olds = availableDevices
+      //   olds = olds.concat(selecteds)
+      //   setAvailableDevices(olds);
+      // }
+      // function filterLeft(s) {
+      //   setFilterText(s)
+      //   // if (s==='') setAvailableDevices(masterDevices)  
+      //   var results = masterDevices.filter(d => d.SerialNumber.indexOf(s) >= 0)
+      //   setAvailableDevices(results)
+      // }
     return (
-        <div className="container">
+        <div className="container-fluid">
             <h3>Group Devices</h3>
             <form>
                 <div class="mb-3 mt-3">
@@ -174,28 +203,55 @@ export default function GroupDevices() {
                     <label>Description:</label>
                     <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
-                <div className='row'>
-          <div className='col-md-5'>
-            <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
-            <select className="form-select" id="selDevice" multiple="muliple" size='20'>
-              {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
-            </select>
-          </div>
-          <div className='col-md-2'>
 
-            <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
-            <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button>
-          </div>
-          <div className='col-md-5'>
-            <select className="form-select" id="selSelectedDevice" multiple="muliple" size='20'>
+                  
+                
 
-              {selectedDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
-            </select>
-          
-     </div>
-      </div>
-<div>
-                <button class="btn btn-success" onClick={() => save()}>Save</button> <n />
+                <div className='select-input select-input-multiple' multiple="multiple" style={{border:'solid 1px grey', height:'50px'}}> <br/><br/>
+          <div className='selected-list'>
+            {listSelected.map((item, index) => (
+              <div className='selected-item'>
+                <span 
+                  key={index} 
+                >
+                  {item.SerialNumber === null ? placeholder : item.SerialNumber}
+                </span>
+                {/* <span onClick={() => removeItem(index)}>
+                  <FontAwesomeIcon className='remove-icon' icon={faTimes} />
+                </span> */}
+              </div>
+            ))}
+            <div className="select-click" onClick={()=>handleIsOpen()} />
+          </div>
+        
+
+        </div> <br/>
+     
+        {isOpen ?
+          <div className='select-list' style={{border:'solid 1px grey', height:'50px'}}>
+            {availableDevices.map((item, index) => (
+              <div
+                // key={index}
+                // onClick={() => handleSelect(filteredData[index].SerialNumber, filteredData[index].SerialNumber)}
+                // className='select-item'
+              >
+                
+                <span className='select-title'>{item.SerialNumber}</span>
+              </div>
+            ))}
+          </div>
+          : ''
+        }   
+      
+     
+
+            
+             
+         
+     
+                
+                <div>
+                <button class="btn btn-success" onClick={() => save()}>Save </button> <n />
                 <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
                 </div>
             </form>
@@ -237,3 +293,24 @@ export default function GroupDevices() {
     );
 }
 
+
+// <div className='row'>
+//           <div className='col-md-5'>
+//             <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
+//             <select className="form-select" id="selDevice" multiple="muliple" size='20'>
+//               {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
+//             </select>
+//           </div>
+//           <div className='col-md-2'>
+
+//             <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
+//             <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button>
+//           </div>
+//           <div className='col-md-5'>
+//             <select className="form-select" id="selSelectedDevice" multiple="muliple" size='20'>
+
+//               {selectedDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
+//             </select>
+          
+//      </div>
+//       </div>
