@@ -24,20 +24,22 @@ export default function DevicesForm() {
     const [labSerialNumber, setLabSerialNumber] = useState('')
     const [dateSync, setDateSync] = useState('')
     const [isActive, setIsActive] = useState('')
-    //const basedURL1 = "http://127.0.0.1:3000"
+    const basedURL1 = "http://127.0.0.1:3000"
     const basedURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
     const [keyword, setKeyword] = useState('')
+    const [deviceGroup, setDeviceGroup]= useState([])
 
     const save = () => {
         if (id === '') {
+          
             fetch(basedURL + "/Devices", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic '+ Token
                 },
-                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type,  LabSerialNumber: labSerialNumber,IsActive: isActive})
+                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type,  LabSerialNumber: labSerialNumber,IsActive: isActive, DevicesGroup:[]})
             }).then(data => load())
         }
         else {
@@ -62,9 +64,20 @@ export default function DevicesForm() {
         setData(data)
         setLoading(false)
     }
+    const loadDeviceGroup = async () => {
+        const response = await fetch(basedURL1 + "/Devicegroup", {
+            method: 'GET',
+            headers: { 'Authorization': 'Basic '+Token }
+        
+        })
+        const deviceGroup = await response.json()
+        setDeviceGroup(deviceGroup)
+        setLoading(false)
+    }
 
     useEffect(() => {
         load()
+        loadDeviceGroup()
     }, []);
 
     // function toggle(checked) {
@@ -160,6 +173,13 @@ export default function DevicesForm() {
                             <label >LabSerialNumber:</label>
                             <input type="text" className="form-control" value={labSerialNumber} onChange={(e) => setLabSerialNumber(e.target.value)} />
                         </div>
+                        <div class="mb-3 mt-3">
+      <label>Select Group: </label>
+      <select className="form-select"  >
+      <option>--</option>
+        {deviceGroup.map(s=> (<option>{s.Name} </option>))}    
+      </select>
+      </div>
                         <div class="mb-3 mt-3">
                             <label >IsActive:</label> &nbsp;
                             <input  type="checkbox" id="isActive" value="yes" /> 

@@ -70,7 +70,7 @@ export default function AssignUser() {
       return {Id: ud.DeviceId, SerialNumber: ud.DeviceSerialNumber}
     })
 
-    //console.log(devices)
+    console.log(devices)
     setSelectedDevices(devices)
     setLoading(false)
 
@@ -176,7 +176,7 @@ export default function AssignUser() {
         <div className='row'>
           <div className='col-md-5'>
             <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
-            <select className="form-select" id="selDevice" multiple="muliple" size='20'>
+            <select className="form-select" id="selDevice" multiple="muliple" size='10'>
               {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
 
