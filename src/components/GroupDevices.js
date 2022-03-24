@@ -13,6 +13,10 @@ export default function GroupDevices() {
     const [id, setId] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
+ 
+
+   
+
     const baseURL = "http://127.0.0.1:3000"
 
     // const baseURL = "http://thegreenlab.xyz:3000"
@@ -58,7 +62,7 @@ export default function GroupDevices() {
 
     useEffect(async () => {
         load()
-    
+       
     }, []);
 
 
@@ -84,8 +88,6 @@ export default function GroupDevices() {
         setId('')
     }
     
-
-    
     
     return (
         <div className="container-fluid">
@@ -102,11 +104,6 @@ export default function GroupDevices() {
                     <label>Description:</label>
                     <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
-
-          
-
-      
-    
                 <div>
                 <button class="btn btn-success" onClick={() => save()}>Save </button> <n />
                 <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
@@ -149,25 +146,3 @@ export default function GroupDevices() {
         </div>
     );
 }
-
-
-// <div className='row'>
-//           <div className='col-md-5'>
-//             <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
-//             <select className="form-select" id="selDevice" multiple="muliple" size='20'>
-//               {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
-//             </select>
-//           </div>
-//           <div className='col-md-2'>
-
-//             <button className='btn btn-primary' onClick={() => moveRight()} > <FontAwesomeIcon icon={faArrowRight} /></button><br /><br />
-//             <button className='btn btn-primary' onClick={() => moveLeft()}> <FontAwesomeIcon icon={faArrowLeft} /></button>
-//           </div>
-//           <div className='col-md-5'>
-//             <select className="form-select" id="selSelectedDevice" multiple="muliple" size='20'>
-
-//               {selectedDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
-//             </select>
-          
-//      </div>
-//       </div>

@@ -24,27 +24,22 @@ export default function DevicesForm() {
     const [labSerialNumber, setLabSerialNumber] = useState('')
     const [dateSync, setDateSync] = useState('')
     const [isActive, setIsActive] = useState('')
-    //const basedURL1 = "http://127.0.0.1:3000"
+    const basedURL1 = "http://127.0.0.1:3000"
     const basedURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
     const [keyword, setKeyword] = useState('')
-    const [availableDevices, setAvailableDevices] = useState([])
-    const [selectedDevices, setSelectedDevices] = useState([])
-    const [masterDevices, setMasterDevices] = useState([])
-    const [filterText, setFilterText] = useState('')
-
-    const [listSelected, setListSelected]=useState([])
-    const [isOpen, setIsOpen]= useState(false)
+    const [deviceGroup, setDeviceGroup]= useState([])
 
     const save = () => {
         if (id === '') {
+          
             fetch(basedURL + "/Devices", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic '+ Token
                 },
-                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type,  LabSerialNumber: labSerialNumber,IsActive: isActive})
+                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type,  LabSerialNumber: labSerialNumber,IsActive: isActive, DevicesGroup:[]})
             }).then(data => load())
         }
         else {
@@ -68,13 +63,21 @@ export default function DevicesForm() {
         const data = await response.json()
         setData(data)
         setLoading(false)
-        setAvailableDevices(availableDevices)
-        setMasterDevices(availableDevices)
-       
+    }
+    const loadDeviceGroup = async () => {
+        const response = await fetch(basedURL1 + "/Devicegroup", {
+            method: 'GET',
+            headers: { 'Authorization': 'Basic '+Token }
+        
+        })
+        const deviceGroup = await response.json()
+        setDeviceGroup(deviceGroup)
+        setLoading(false)
     }
 
     useEffect(() => {
         load()
+        loadDeviceGroup()
     }, []);
 
     // function toggle(checked) {
@@ -123,66 +126,14 @@ export default function DevicesForm() {
         setDateSync('')
        
     }
- 
-      const removeItem =(s)=>{
-           var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
-    
-        //remove selecteds from availableDevices
-        var filterDevices = selectedDevices.filter(d => {
-          return !selecteds.find(s => s.Id == d.Id)
-        })
-        console.log(filterDevices);
-        setSelectedDevices(filterDevices)
-    
-        var olds = availableDevices
-        olds = olds.concat(selecteds)
-        console.log(olds);
-        setAvailableDevices(olds);
-      }
+    // function search(){
+    //     fetch(basedURL + "/Devices" + "/search?keyword="+keyword, {
+    //         headers: { 'Authorization': 'Basic aGllbkBnbWFpbC5jb206MTIz' }
+    //     })
+    //     // .then(data => load())
+    //     setData(data.Items)
+    // }
 
-      function filterLeft(s) {
-        setFilterText(s)
-        // if (s==='') setAvailableDevices(masterDevices)  
-        var results = masterDevices.filter(d => d.SerialNumber.indexOf(s) >= 0)
-        setAvailableDevices(results)
-      }
-      function getSelectValues(select) {
-        var result = [];
-        var options = select && select.options;
-        var opt;
-    
-        for (var i = 0, iLen = options.length; i < iLen; i++) {
-          opt = options[i];
-    
-          if (opt.selected) {
-            result.push({ Id: opt.value, SerialNumber: opt.text });
-          }
-        }
-        return result;
-      }
-    
-const handleSelect=() =>{
-        var selecteds = getSelectValues(document.querySelector('#selDevice'))
-        //remove selecteds from availableDevices
-        var filterDevices = availableDevices.filter(d => {
-          return !selecteds.find(s => s.Id == d.Id)
-        })
-    console.log(filterDevices);
-        setAvailableDevices(filterDevices)
-    
-        var olds = selectedDevices
-        olds = olds.concat(selecteds)
-    
-        //remove duplicate objects
-        olds = olds.filter((value, index, self) =>
-          index === self.findIndex((t) => (
-            t.Id === value.Id && t.SerialNumber === value.SerialNumber
-          ))
-        )
-    console.log(olds);
-        setSelectedDevices(olds);
-    
-      }
 
     return (
         <div id="devicesform" className="container-fluid">
@@ -223,35 +174,18 @@ const handleSelect=() =>{
                             <input type="text" className="form-control" value={labSerialNumber} onChange={(e) => setLabSerialNumber(e.target.value)} />
                         </div>
                         <div class="mb-3 mt-3">
+      <label>Select Group: </label>
+      <select className="form-select"  >
+      <option>--</option>
+        {deviceGroup.map(s=> (<option>{s.Name} </option>))}    
+      </select>
+      </div>
+                        <div class="mb-3 mt-3">
                             <label >IsActive:</label> &nbsp;
                             <input  type="checkbox" id="isActive" value="yes" /> 
                         </div>
                     </div>
                 </div>
-
-                <div className='col-md-5'>
-            <select className="form-select" id="selSelectedDevice" multiple="muliple" size='5'>
-            {/* <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} /> */}
-              {selectedDevices.filter(d => d.SerialNumber !== "").map(s => (
-              <option value={s.Id} onClick={()=>removeItem()}>{s.SerialNumber}
-                {/* <FontAwesomeIcon icon={faTimes} onClick={()=>removeItem()}/> */}
-               </option>))}
-            </select>
-           
-          </div> <br/>
-                
-          <div style={{direction:'column'}}>
-          <div className='col-md-5'>
-         
-            <select className="form-select" id="selDevice" multiple="muliple" size='10'>
-              {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id} onClick={()=>handleSelect()}>{s.SerialNumber} </option>))}
-            </select>
-
-          </div>
-              
-          </div>
-        
-
                 <div className="btnDeviceForm">
                     <button class="btn btn-success"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
                     <button class="btn btn-success"  onClick={() => addnew()}>Add new</button> 

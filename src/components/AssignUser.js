@@ -70,7 +70,7 @@ export default function AssignUser() {
       return {Id: ud.DeviceId, SerialNumber: ud.DeviceSerialNumber}
     })
 
-    //console.log(devices)
+    console.log(devices)
     setSelectedDevices(devices)
     setLoading(false)
 
