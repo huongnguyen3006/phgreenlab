@@ -9,19 +9,10 @@ import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 export default function GroupDevices() {
 
     const Token = window.localStorage.getItem('Token')
-    const [filterText, setFilterText] = useState('')
     const [data, setData] = useState([])
     const [id, setId] = useState('')
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const [availableDevices, setAvailableDevices] = useState([])
-    const [selectedDevices, setSelectedDevices] = useState([])
-    const [masterDevices, setMasterDevices] = useState([])
-    const [listSelected, setListSelected]=useState([])
-    const [isOpen, setIsOpen]= useState(false)
-    const [isSelected, setIsSelected]=useState(false)
-    const [placeholder, setPlaceholder]=useState('Please select item')
-
     const baseURL = "http://127.0.0.1:3000"
 
     // const baseURL = "http://thegreenlab.xyz:3000"
@@ -67,7 +58,7 @@ export default function GroupDevices() {
 
     useEffect(async () => {
         load()
-        loadDevice()
+    
     }, []);
 
 
@@ -92,102 +83,10 @@ export default function GroupDevices() {
         setName('')
         setId('')
     }
-    const loadDevice = async () => {
-        const response = await fetch(baseURL + "/Devices", {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic '+ Token
-          },
-        })
-        const availableDevices = await response.json()
-        setAvailableDevices(availableDevices)
-        setMasterDevices(availableDevices)
-        setLoading(false)
     
-      }
-      const removeItem =()=>{
-alert('Xoas')
-      }
-      const handleIsOpen =()=>{
-setIsOpen(true)
-setAvailableDevices(availableDevices)
-      }
 
-      const handleSelect=()=>{
-        if (!setIsOpen) {
-          document.addEventListener('click', handleOutsideClick(), false);
-        } else {
-          document.removeEventListener('click', handleOutsideClick(), false);
-        }
-      }
-
-     const handleOutsideClick = () => {
-        handleSelect();
-      };
-
-    const filteredData=()=>{
-      availableDevices =[]
-        setIsSelected(true)
-        return availableDevices.filter(item => !isSelected.find(title => item.SerialNumber === title))
-      }
-      // function getSelectValues(select) {
-      //   var result = [];
-      //   var options = select && select.options;
-      //   var opt;
     
-      //   for (var i = 0, iLen = options.length; i < iLen; i++) {
-      //     opt = options[i];
     
-      //     if (opt.selected) {
-      //       result.push({ Id: opt.value, SerialNumber: opt.text });
-      //     }
-      //   }
-      //   return result;
-      // }
-    
-      // function moveRight() {
-      //   var selecteds = getSelectValues(document.querySelector('#selDevice'))
-      //   //remove selecteds from availableDevices
-      //   var filterDevices = availableDevices.filter(d => {
-      //     return !selecteds.find(s => s.Id == d.Id)
-      //   })
-    
-      //   setAvailableDevices(filterDevices)
-    
-      //   var olds = selectedDevices
-      //   olds = olds.concat(selecteds)
-    
-      //   //remove duplicate objects
-      //   olds = olds.filter((value, index, self) =>
-      //     index === self.findIndex((t) => (
-      //       t.Id === value.Id && t.SerialNumber === value.SerialNumber
-      //     ))
-      //   )
-    
-      //   setSelectedDevices(olds);
-    
-      // }
-    
-      // function moveLeft() {
-      //   var selecteds = getSelectValues(document.querySelector('#selSelectedDevice'))
-    
-      //   //remove selecteds from availableDevices
-      //   var filterDevices = selectedDevices.filter(d => {
-      //     return !selecteds.find(s => s.Id == d.Id)
-      //   })
-      //   setSelectedDevices(filterDevices)
-    
-      //   var olds = availableDevices
-      //   olds = olds.concat(selecteds)
-      //   setAvailableDevices(olds);
-      // }
-      // function filterLeft(s) {
-      //   setFilterText(s)
-      //   // if (s==='') setAvailableDevices(masterDevices)  
-      //   var results = masterDevices.filter(d => d.SerialNumber.indexOf(s) >= 0)
-      //   setAvailableDevices(results)
-      // }
     return (
         <div className="container-fluid">
             <h3>Group Devices</h3>
@@ -204,52 +103,10 @@ setAvailableDevices(availableDevices)
                     <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
 
-                  
-                
+          
 
-                <div className='select-input select-input-multiple' multiple="multiple" style={{border:'solid 1px grey', height:'50px'}}> <br/><br/>
-          <div className='selected-list'>
-            {listSelected.map((item, index) => (
-              <div className='selected-item'>
-                <span 
-                  key={index} 
-                >
-                  {item.SerialNumber === null ? placeholder : item.SerialNumber}
-                </span>
-                {/* <span onClick={() => removeItem(index)}>
-                  <FontAwesomeIcon className='remove-icon' icon={faTimes} />
-                </span> */}
-              </div>
-            ))}
-            <div className="select-click" onClick={()=>handleIsOpen()} />
-          </div>
-        
-
-        </div> <br/>
-     
-        {isOpen ?
-          <div className='select-list' style={{border:'solid 1px grey', height:'50px'}}>
-            {availableDevices.map((item, index) => (
-              <div
-                // key={index}
-                // onClick={() => handleSelect(filteredData[index].SerialNumber, filteredData[index].SerialNumber)}
-                // className='select-item'
-              >
-                
-                <span className='select-title'>{item.SerialNumber}</span>
-              </div>
-            ))}
-          </div>
-          : ''
-        }   
       
-     
-
-            
-             
-         
-     
-                
+    
                 <div>
                 <button class="btn btn-success" onClick={() => save()}>Save </button> <n />
                 <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
