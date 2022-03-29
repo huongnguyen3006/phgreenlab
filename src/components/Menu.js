@@ -8,7 +8,7 @@ export default function Menu() {
     window.location ='/'
 }
   return (
-    <div>
+    <div className="container-fluid">
 
     <nav class="navbar navbar-expand-sm navbar-light">
       <div>
