@@ -111,8 +111,10 @@ export default function Details() {
                 },
             })
 
+            setChartOptions(sOptions)
+
         }
-        setChartOptions(sOptions)
+      
     }
 
     return (
