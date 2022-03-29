@@ -14,12 +14,9 @@ export default function GroupDevices() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
  
-
-   
-
     const baseURL = "http://127.0.0.1:3000"
 
-    // const baseURL = "http://thegreenlab.xyz:3000"
+    //const baseURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
 
     const save = () => {
@@ -70,9 +67,6 @@ export default function GroupDevices() {
         setId(id)
         setName(name)
         setDescription(description)
-
-
-
     }
 
     const deleteDevicegroup = (Id) => {
@@ -90,7 +84,9 @@ export default function GroupDevices() {
     
     
     return (
+
         <div className="container-fluid">
+            <meta charset="utf-8"></meta>
             <h3>Group Devices</h3>
             <form>
                 <div class="mb-3 mt-3">

@@ -112,11 +112,7 @@ font-size: 20px;
   background-color:#e0e0e0;
 
 }
-.table{
-  flex: 1;
-  justify-content: center;
-  margin-left: 70px;
-}
+
 .datadetails{
   margin: 40px 50px 60px 100px;
   padding: 10px;
@@ -131,6 +127,11 @@ font-size: 20px;
   justify-content: center;
   flex-direction: row;
 
+}
+
+.box{
+  margin: 10px;
+  padding: 10px;
 
 }
 .table-details{

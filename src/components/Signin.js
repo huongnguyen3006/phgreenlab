@@ -25,7 +25,7 @@ export default function Signin() {
         })
         try {
             const data = await response.json()
-            localStorage.setItem('Token',  btoa(email+':'+password))
+            localStorage.setItem('Token', btoa(email + ':' + password))
             window.location = '/dashboard';
         }
 
@@ -37,34 +37,33 @@ export default function Signin() {
 
 
     return (
-        <div>
-            <marquee direction="up" className="slogan" >“A PIONEER OF HIGH QUALITY!”</marquee>
-            <div className="signin" >
-
-                <h1 >Sign In</h1> <br />
-                <div className="signin-content">
+        <div class="container">
+            {/* <marquee direction="up" className="slogan" >“A PIONEER OF HIGH QUALITY!”</marquee> */}
+            <div>
+                <h2>Sign in</h2>
+                <div>
                     <div>
-                    <label><FontAwesomeIcon icon={faUser} /></label> &nbsp;&nbsp;&nbsp;
-                    <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="user, email" /> <br />  <br />
-                  </div>  
-                  <div className='password'>
-                    <label style={{marginTop:15}}><FontAwesomeIcon icon={faKey} /></label> &nbsp;&nbsp;&nbsp;
-
-                    <div className='inputIcon' >
-                    <input  value={password} onChange={(e) => setPassword(e.target.value)}  type="password" placeholder="password" /> &nbsp;&nbsp;&nbsp;
-                    <FontAwesomeIcon icon={faEye} className='iconEye'/>
+                        <label><FontAwesomeIcon icon={faUser} /></label>
+                        <input value={email} onChange={(e) => setEmail(e.target.value)} type="text" placeholder="user, email" /> 
                     </div>
-                  </div>  
-                   
-                    </div> <br />
-                
-                    <button type ="button"  onClick={() => login()} >Sign In</button> <br /><br /><br /><br /><br />
+                    <div>
+                        <label style={{ marginTop: 15 }}><FontAwesomeIcon icon={faKey} /></label>
 
-                    <a  className="btnFgSu" href="/forgotpassword"><FontAwesomeIcon icon={faUnlockAlt} /> Forgot Password</a> &nbsp;&nbsp;&nbsp;
-                    <a className="btnFgSu" href="/signup">Sign Up</a>
-                </div>
+                            <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" placeholder="password" />
 
-            
+                    </div>
+
+                </div> <br />
+
+                <button className="btn btn-primary" onClick={() => login()} >Sign In</button>
+
+                <br/>
+
+                <a href="/forgotpassword"> Forgot Password</a> &nbsp;
+                <a href="/signup">Sign Up</a>
+            </div>
+
+
         </div>
     )
 }

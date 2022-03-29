@@ -117,8 +117,8 @@ export default function Details() {
     }
 
     return (
-        <div className="details">
-            <h2>Statistic data (min, max, avg) of sensors</h2><br/>
+        <div className="box">
+            <h2>View statistic data </h2><br/>
             <label>From date:</label> <n />
             <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} />
             <label>To date:</label><n />

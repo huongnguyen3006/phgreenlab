@@ -72,12 +72,11 @@ function sessionGet(key) {
   }
 
     return (
-        <div className="container mt-8">
-            <h1 className="text-muted" > Online Monitoring System</h1>
+        <div>
             <div>
                 {loading ? "Loading...." :
-                    <table className="table">
-                        <thead className="table-head">
+                    <table class="table">
+                        <thead>
                             <tr>
                                 <td>Description</td>
                                 <td>DateSync</td>

@@ -12,9 +12,7 @@ export default function Menu() {
 
     <nav class="navbar navbar-expand-sm navbar-light">
       <div>
-        <a class="navbar-brand" href="#">
-          <img src={logo} alt="Logo" style={{ width: 60, height: 50 }} class="rounded-pill" />
-        </a>
+    
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
           <span class="navbar-toggler-icon">
           </span>
@@ -22,7 +20,7 @@ export default function Menu() {
         <div class="collapse navbar-collapse" id="collapsibleNavbar" >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a style={{ color: 'white', }} class="nav-link" href="/">  </a>
+              <a style={{ color: 'white'}} class="nav-link" href="/">  </a>
             </li>
             <li class="nav-item">
               <a style={{ color: 'white', }} class="nav-link" href="/dashboard">OMS</a>

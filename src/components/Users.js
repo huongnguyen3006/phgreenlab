@@ -56,6 +56,7 @@ export default function Users() {
       }).then(data => load())
     }
     else {
+  
       fetch(baseURL + "/Users", {
         method: 'PUT',
         headers: {
@@ -64,6 +65,7 @@ export default function Users() {
         },
         body: JSON.stringify({ Id: id, Email: email, Password: password })
       }).then(data => load())
+ 
     }
   }
 
@@ -74,9 +76,11 @@ export default function Users() {
   }
 
   const editUser = (id, email, password) => {
+    if (window.confirm('Do you want to reset?')==true){
     setEmail(email)
     setId(id)
-    setPassword(password)
+    setPassword('')
+    }
   }
   const deleteUser = (Id) => {
 
@@ -93,30 +97,32 @@ export default function Users() {
   }
 
   return (
-    <div>
+    <div className="box">
       <h3 >Users Management</h3>
-      <div className="container-user">
-        <div class="mb-3 mt-3">
+      <div>
+        <div>
           <input type="hidden" className='form-control' value={id} onChange={(e) => setId(e.target.value)} />
         </div>
-        <div class="mb-3 mt-3">
-          <label >Email:</label>
-          <input type="text"   value={email} onChange={(e) => setEmail(e.target.value)} />
+        <div>
+          <label>Email:</label>
+          <input class="form-control" type="text"   value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
-        <div class="mb-3 mt-3">
-          <label >Password:</label>
-          <input type="password"  value={password} onChange={(e) => setPassword(e.target.value)} />
+        <div>
+          <label>Password:</label>
+          <input class="form-control"  type="text"  value={password} onChange={(e) => setPassword(e.target.value)} />
         </div>
       
       </div>
-      <div className="btnUser">
-        <button class="btn btn-success"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
+      <br/>
+      <div>
+        <button class="btn btn-success"  onClick={() => save()}>Save</button> &nbsp;
         <button class="btn btn-success"  onClick={() => addnew()}>Add new</button>
       </div>
 
-      <div className="infoTable">
-        <table className="table table-bordered">
-          <thead className="table-head">
+      <br/>
+      <div>
+        <table class="table"> 
+          <thead>
             <tr>
               <td>ID</td>
               <td>Email</td>

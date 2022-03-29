@@ -97,8 +97,8 @@ export default function DataDetails() {
 
     }
     return (
-        <div className="datadetails">
-            <h4 >Lastest 7 Days Data </h4>
+        <div className="box">
+            <h4>Lastest 7 Days Data </h4>
             <button className='btn btn-success' onClick={()=>show()}>Show</button>
             {sensors.map((sensor, index) => {
                 return (
