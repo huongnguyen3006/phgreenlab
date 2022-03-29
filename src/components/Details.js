@@ -47,6 +47,8 @@ export default function Details() {
     }, []);
 
 
+    var sOptions = []   
+
     const show2 = async () => {
         let queryString = window.location.search
         let params = new URLSearchParams(queryString);
@@ -60,7 +62,6 @@ export default function Details() {
 
         try{
             const response = await data.json()
-            console.log(response);
             setResponse(response)
         }
         catch(e){
@@ -72,7 +73,7 @@ export default function Details() {
         }
 
 
-        let sOptions = []
+       
         for (var i = 0; i < response.length; i++) {
             //di qua tung sensor
             let sensor = response[i]
@@ -109,33 +110,31 @@ export default function Details() {
                     categories: date
 
                 },
-            })
-
-            setChartOptions(sOptions)
-
+            })              
         }
+        setChartOptions(sOptions)
       
     }
 
     return (
         <div className="details">
-            <h2 >Details</h2>
+            <h2>Statistic data (min, max, avg) of sensors</h2><br/>
             <label>From date:</label> <n />
-            <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} /> <n /><n />
+            <input type="date" value={stDate} onChange={(e) => setStDate(e.target.value)} />
             <label>To date:</label><n />
-            <input type="date" value={enDate} onChange={(e) => setEnDate(e.target.value)} /> <n />
-            <button className='btn btn-success'  onClick={() => show2()}>Show</button>
+            <input type="date" value={enDate} onChange={(e) => setEnDate(e.target.value)} /> 
+            <button className='btn btn-success'  onClick={() => show2()}>Show</button><br/>
             {/* <button onClick={() => showtable()}>ShowData</button> */}
             {response.map((a, index) => {
                 return (
                     <>
-                        <p >{a.sensorType}</p>
+                        <h3>{a.sensorType}</h3>
                         <div className="table-details">
                             <div className="table-value">
                                 <table className="table table-hover" >
                                     <thead>
                                         <tr>
-                                            <td >Date</td>
+                                            <td>Date</td>
                                             <td style={{ color: '#4fc3f7' }}>Avg</td>
                                             <td>Min</td>
                                             <td style={{ color: '#67d669' }}>Max</td>

@@ -23,12 +23,10 @@ import DashBoard from './components/Dashboard';
 import AssignUser from './components/AssignUser';
 
 
-
-
 function App() {
   const [showLogin, setShowLogin] = useState(false)
   useEffect(() => {
-    document.title = "Online Monitoring System "
+    document.title = "Online Monitoring System"
     if (localStorage.getItem('Token') === null || localStorage.getItem('Token') === "") {
       setShowLogin(true)
     }
@@ -37,9 +35,7 @@ function App() {
     }
   }, []);
   return (
-    <div>
-
-
+    <div class='container-fluid'>
       <Menu />
       {showLogin ?
         <Signin />

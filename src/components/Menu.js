@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import logo from './logo.jpg';
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHome, faKey, faUser, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" />;
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
-<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
 export default function Menu() {
   const signout = ()=>{
     localStorage.removeItem('Token')
     window.location ='/'
 }
   return (
+    <div>
+
     <nav class="navbar navbar-expand-sm navbar-light">
-      <div class="container">
+      <div>
         <a class="navbar-brand" href="#">
           <img src={logo} alt="Logo" style={{ width: 60, height: 50 }} class="rounded-pill" />
         </a>
@@ -24,7 +22,7 @@ export default function Menu() {
         <div class="collapse navbar-collapse" id="collapsibleNavbar" >
           <ul class="navbar-nav">
             <li class="nav-item">
-              <a style={{ color: 'white', }} class="nav-link" href="/"> <FontAwesomeIcon icon={faHome} /> </a>
+              <a style={{ color: 'white', }} class="nav-link" href="/">  </a>
             </li>
             <li class="nav-item">
               <a style={{ color: 'white', }} class="nav-link" href="/dashboard">OMS</a>
@@ -49,7 +47,7 @@ export default function Menu() {
                   <li>
                   {localStorage.getItem('Token') !== null && localStorage.getItem('Token') !== "" ?
                     <a class="dropdown-item" href="#" onClick={()=>signout()}>
-                   <FontAwesomeIcon icon={faSignOutAlt} fixedWidth /> Log Out</a>
+                   Log Out</a>
                   : ""}
                   </li>
 
@@ -61,5 +59,6 @@ export default function Menu() {
         </div>
       </div>
     </nav>
+    </div>
   )
 }
