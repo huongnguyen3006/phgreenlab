@@ -136,10 +136,10 @@ export default function DevicesForm() {
 
 
     return (
-        <div id="devicesform" className="container-fluid">
+        <div id="devicesform" class="box">
             <h3>Devices</h3>
 
-            <div >
+            <div>
                 <div>
                     <div>
                         <input type="hidden" className="form-control" value={id} onChange={(e) => setId(e.target.value)} />

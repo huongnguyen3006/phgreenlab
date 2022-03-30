@@ -85,9 +85,9 @@ export default function GroupDevices() {
     
     return (
 
-        <div className="container-fluid">
+        <div className="box">
             <meta charset="utf-8"></meta>
-            <h3>Group Devices</h3>
+            <h3>Device Group</h3>
             <form>
                 <div class="mb-3 mt-3">
                     <input type="hidden" className="form-control" value={id} onChange={(e) => setId(e.target.value)} />
@@ -101,21 +101,22 @@ export default function GroupDevices() {
                     <input type="text" className="form-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                 </div>
                 <div>
-                <button class="btn btn-success" onClick={() => save()}>Save </button> <n />
+                <button class="btn btn-success" onClick={() => save()}>Save </button> &nbsp;
                 <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
                 </div>
+                <br/>
             </form>
 
 
-            <div className="table">
+            <div>
 
-                <table className="table table-hover">
+                <table class="table table-hover">
                     <thead>
                         <tr>
                             <td>ID</td>
                             <td>Name</td>
                             <td>Description</td>
-
+                            <td>Action</td>
                         </tr>
                     </thead>
 
@@ -128,7 +129,7 @@ export default function GroupDevices() {
                                         <td>{e.Name}</td>
                                         <td>{e.Description} </td>
                                         <td>
-                                            <button className="btn btn-success" onClick={() => editDevicegroup(e.Id, e.Name, e.Description)}><FontAwesomeIcon icon={faEdit} /></button> <br /><br />
+                                            <button className="btn btn-success" onClick={() => editDevicegroup(e.Id, e.Name, e.Description)}><FontAwesomeIcon icon={faEdit} /></button> &nbsp;
                                             <button className="btn btn-success" onClick={() => deleteDevicegroup(e.Id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
                                         </td>
                                     </tr>
