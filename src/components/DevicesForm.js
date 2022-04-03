@@ -20,15 +20,16 @@ export default function DevicesForm() {
     const [model, setModel] = useState('')
     const [serialNumber, setSerialNumber] = useState('')
     const [type, setType] = useState('')
-    const [lab_Id, setLab_Id] = useState('')
     const [labSerialNumber, setLabSerialNumber] = useState('')
     const [dateSync, setDateSync] = useState('')
     const [isActive, setIsActive] = useState('')
-    const basedURL1 = "http://127.0.0.1:3000"
-    const basedURL = "http://thegreenlab.xyz:3000"
+    const basedURL = "http://127.0.0.1:3000"
+    // const basedURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
     const [keyword, setKeyword] = useState('')
     const [deviceGroups, setDeviceGroups] = useState([])
+    const [deviceGroup_Id, setDeviceGroup_Id]=useState('')
+  
 
     const save = () => {
         if (id === '') {
@@ -39,7 +40,7 @@ export default function DevicesForm() {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + Token
                 },
-                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive, DevicesGroup: [] })
+                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive, DevicesGroup: deviceGroup_Id})
             }).then(data => load())
         }
         else {
@@ -65,7 +66,7 @@ export default function DevicesForm() {
         setLoading(false)
     }
     const loadDeviceGroups = async () => {
-        const response = await fetch(basedURL1 + "/Devicegroup", {
+        const response = await fetch(basedURL + "/Devicegroup", {
             method: 'GET',
             headers: { 'Authorization': 'Basic ' + Token }
 
@@ -209,6 +210,7 @@ export default function DevicesForm() {
                             <td>Type </td>
                             <td>LabSerialNumber</td>
                             <td>IsActive</td>
+                            <td>DeviceGroup</td>
                             <td>Action</td>
                         </tr>
                     </thead>
@@ -228,6 +230,7 @@ export default function DevicesForm() {
                                         <td>{e.Type}</td>
                                         <td>{e.LabSerialNumber}</td>
                                         <td>{e.IsActive}</td>
+                                        <td>{e.Lab_Id}</td>
                                         <td>
                                             <button className="btn btn-success" onClick={() => editDevice(e.Id, e.DateSync, e.Description, e.FriendlyName, e.Model, e.SerialNumber, e.Type, e.LabSerialNumber, e.IsActive,)}><FontAwesomeIcon icon={faEdit} /></button> &nbsp;
                                             <button className="btn btn-success" onClick={() => deleteDevice(e.Id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
