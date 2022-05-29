@@ -20,7 +20,7 @@ export default function Details() {
     const [chartOptions, setChartOptions] = useState([])
 
     const baseURL = "http://thegreenlab.xyz:3000"
-
+    //const baseURL = "http://localhost:3000"
     function today() {
         return new Date();
     }
@@ -47,9 +47,13 @@ export default function Details() {
     }, []);
 
 
-    var sOptions = []   
+
 
     const show2 = async () => {
+
+        var sOptions = []   
+
+
         let queryString = window.location.search
         let params = new URLSearchParams(queryString);
         let serialNumber = params.get("DeviceSerialNumber");
@@ -66,10 +70,11 @@ export default function Details() {
         }
         catch(e){
             console.log('Error '+ e.message)
+            alert('It seems that the period you select does not contain data')
             setData([])
         }
         finally{
-            //do something here
+           // do something here
         }
 
 
@@ -94,6 +99,7 @@ export default function Details() {
             for (var j = 0; j < sensor.data.length; j++) {
                 date.push(sensor.data[j].DateOnly)
             }
+
             sOptions.push({
                 chart: {
                     type: 'spline'
@@ -112,6 +118,8 @@ export default function Details() {
                 },
             })              
         }
+
+        console.log(sOptions)
         setChartOptions(sOptions)
       
     }

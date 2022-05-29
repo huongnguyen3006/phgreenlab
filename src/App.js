@@ -15,13 +15,14 @@ import Details from './components/Details';
 import Signin from './components/Signin';
 
 import DataDetails from './components/DataDetails';
-import GroupDevices from './components/GroupDevices';
+import DeviceGroup from './components/DeviceGroup';
 import DevicesForm from './components/DevicesForm';
 import SignUp from './components/SignUp';
 import Users from './components/Users';
 import DashBoard from './components/Dashboard';
 import AssignUser from './components/AssignUser';
 
+<meta charset="utf-8"></meta>
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -59,7 +60,7 @@ function App() {
             </Routes>
 
             <Routes>
-              <Route path="/devicegroup" caseSensitive={false} element={<GroupDevices />} />
+              <Route path="/devicegroup" caseSensitive={false} element={<DeviceGroup />} />
             </Routes>
 
             <Routes>

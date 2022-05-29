@@ -39,7 +39,7 @@ export default function DataDetails() {
         return device
     }
 
-    const show = async () => {
+    const show = async (period) => {
 
         let queryString = window.location.search
         let params = new URLSearchParams(queryString);
@@ -51,7 +51,18 @@ export default function DataDetails() {
 
         for (let i = 0; i < device.Sensors.length; i++) {
             let sensor = device.Sensors[i]
-            const endPoint = `${baseURL}/Datums/Last7Days?DeviceSerialNumber=${serialNumber}&SensorType=${sensor.SensorType}`
+
+            let endPoint = ''
+
+            if (period==='7day')
+            {
+                endPoint = `${baseURL}/Datums/Last7Days?DeviceSerialNumber=${serialNumber}&SensorType=${sensor.SensorType}`
+            }
+            else
+            {
+                endPoint = `${baseURL}/Datums/Last7Days?DeviceSerialNumber=${serialNumber}&SensorType=${sensor.SensorType}`
+            }
+            
             const nresponse = await fetch(endPoint, {
                 // const nresponse = await fetch(`${localURL}/Datums/Last7Days?DeviceSerialNumber=FH21101006&SensorType=pH`,{
                 method: 'GET',
@@ -98,8 +109,9 @@ export default function DataDetails() {
     }
     return (
         <div className="box">
-            <h4>Lastest 7 Days Data </h4>
-            <button className='btn btn-success' onClick={()=>show()}>Show</button>
+            <h4>Show Lastest Data </h4>
+            <button className='btn btn-success' onClick={()=>show('7day')}>Data of 7 days</button>
+            <button className='btn btn-success' onClick={()=>show('24hour')}>Data of 24 hours</button>
             {sensors.map((sensor, index) => {
                 return (
                    <div>

@@ -6,7 +6,7 @@ import { faKeyboard } from "@fortawesome/free-regular-svg-icons";
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>;
 <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-export default function GroupDevices() {
+export default function DeviceGroup() {
 
     const Token = window.localStorage.getItem('Token')
     const [data, setData] = useState([])
@@ -14,14 +14,14 @@ export default function GroupDevices() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
  
-    const baseURL = "http://127.0.0.1:3000"
+   // const baseURL = "http://127.0.0.1:3000"
 
-    //const baseURL = "http://thegreenlab.xyz:3000"
+    const baseURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
 
     const save = () => {
         if (id === '') {
-            fetch(baseURL + "/Devicegroup", {
+            fetch(baseURL + "/DeviceGroups", {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,7 +31,7 @@ export default function GroupDevices() {
             }).then(data => load())
         }
         else {
-            fetch(baseURL + "/Devicegroup", {
+            fetch(baseURL + "/DeviceGroups", {
                 method: "PUT",
                 headers: {
                     'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ export default function GroupDevices() {
 
     }
     const load = (async () => {
-        const response = await fetch(baseURL + "/Devicegroup", {
+        const response = await fetch(baseURL + "/DeviceGroups", {
             method: 'GET',
             headers: {
                 // 'Authorization': 'Basic dnZAZ21haWwuY29tOjEyMzQ1Ng=='}
@@ -70,10 +70,12 @@ export default function GroupDevices() {
     }
 
     const deleteDevicegroup = (Id) => {
-        fetch(baseURL + "/Devicegroup" + "/" + Id, {
+        if (window.confirm('Do you want to delete?')){
+        fetch(baseURL + "/DeviceGroups" + "/" + Id, {
             method: "DELETE",
             headers: { 'Authorization': 'Basic ' + Token }
         }).then(data => load())
+    }
 
     }
     const addnew = () => {

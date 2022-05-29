@@ -14,6 +14,7 @@ export default function DevicesForm() {
 
 
     const [data, setData] = useState([])
+    const [data2, setData2] = useState([])
     const [id, setId] = useState('')
     const [friendlyName, setFriendlyName] = useState('')
     const [description, setDescription] = useState('')
@@ -23,12 +24,12 @@ export default function DevicesForm() {
     const [labSerialNumber, setLabSerialNumber] = useState('')
     const [dateSync, setDateSync] = useState('')
     const [isActive, setIsActive] = useState('')
-    const basedURL = "http://127.0.0.1:3000"
-    // const basedURL = "http://thegreenlab.xyz:3000"
+    //const basedURL = "http://127.0.0.1:3000"
+     const basedURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
     const [keyword, setKeyword] = useState('')
     const [deviceGroups, setDeviceGroups] = useState([])
-    const [deviceGroup_Id, setDeviceGroup_Id]=useState('')
+    const [deviceGroupId, setDeviceGroupId]=useState(0)
   
 
     const save = () => {
@@ -40,7 +41,7 @@ export default function DevicesForm() {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + Token
                 },
-                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive, DevicesGroup: deviceGroup_Id})
+                body: JSON.stringify({ DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive, Devicegroup: {Id: deviceGroupId}})
             }).then(data => load())
         }
         else {
@@ -50,7 +51,7 @@ export default function DevicesForm() {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + Token
                 },
-                body: JSON.stringify({ Id: id, DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive })
+                body: JSON.stringify({ Id: id, DateSync: dateSync, Description: description, FriendlyName: friendlyName, Model: model, SerialNumber: serialNumber, Type: type, LabSerialNumber: labSerialNumber, IsActive: isActive, Devicegroup: {Id: deviceGroupId} })
             }).then(data => load())
 
         }
@@ -63,10 +64,11 @@ export default function DevicesForm() {
         })
         const data = await response.json()
         setData(data)
+        setData2(data)
         setLoading(false)
     }
     const loadDeviceGroups = async () => {
-        const response = await fetch(basedURL + "/Devicegroup", {
+        const response = await fetch(basedURL + "/DeviceGroups", {
             method: 'GET',
             headers: { 'Authorization': 'Basic ' + Token }
 
@@ -95,7 +97,7 @@ export default function DevicesForm() {
     const checked = document.querySelector('#isActive:checked') !== null;
     // console.log(checked); 
 
-    const editDevice = (id, dateSync, description, friendlyName, model, serialNumber, type, labSerialNumber, isActive) => {
+    const editDevice = (id, dateSync, description, friendlyName, model, serialNumber, type, labSerialNumber, isActive, deviceGroupId) => {
         setId(id)
         setDateSync(dateSync)
         setDescription(description)
@@ -106,13 +108,23 @@ export default function DevicesForm() {
         setLabSerialNumber(labSerialNumber)
         setIsActive(isActive)
 
+        setDeviceGroupId(deviceGroupId)
+
+        document.querySelector('#selDeviceGroup').value = deviceGroupId
+    }
+
+    const changeGroup = (value)=>{
+        setDeviceGroupId(value)
     }
 
     const deleteDevice = (Id) => {
+
+    if (window.confirm('Do you want to delete?')){
         fetch(basedURL + "/Devices" + "/" + Id, {
             method: "DELETE",
             headers: { 'Authorization': 'Basic ' + Token }
         }).then(data => load())
+    }
 
     }
     const addnew = () => {
@@ -134,6 +146,21 @@ export default function DevicesForm() {
     //     // .then(data => load())
     //     setData(data.Items)
     // }
+
+    const search = async ()=>{
+        console.log(keyword)
+        if (typeof keyword === undefined || keyword.length==0){
+            
+            await setData(data2)
+            console.log(data)
+        }
+        else{
+            let arr = data.filter(item=>item.SerialNumber.indexOf(keyword)>=0)
+            setData(arr)
+        }
+
+
+    }
 
 
     return (
@@ -176,9 +203,9 @@ export default function DevicesForm() {
                     </div>
                     <div >
                         <label>Select Group: </label>
-                        <select className="form-select"  >
+                        <select id="selDeviceGroup" className="form-select" onChange={(e)=>changeGroup(e.target.value)} >
                             <option>--</option>
-                            {deviceGroups.map(s => (<option>{s.Name} </option>))}
+                            {deviceGroups.map(s => (<option value={s.Id}>{s.Name} </option>))}
                         </select>
                     </div>
                     <div >
@@ -187,15 +214,18 @@ export default function DevicesForm() {
                     </div>
                 </div>
             </div>
+
             <div className="btnDeviceForm">
                 <button class="btn btn-success" onClick={() => save()}>Save</button> &nbsp; &nbsp;
                 <button class="btn btn-success" onClick={() => addnew()}>Add new</button>
             </div>
 
-            {/* <div>
-                    <input type="search" value={keyword} onChange={(e)=>setKeyword(e.target.value)}/>
-                    <button  onClick={() => search()}>Search</button> 
-                </div> */}
+            <div>
+                    <input placeholder='Serial number..' className="form-control" style={{"width":"200px", "display": "inline"}} value={keyword} onChange={(e)=>{
+                        setKeyword(e.target.value)
+                        }}/>
+                    <button className="btn btn-primary" onClick={()=>search()}>Search</button>
+            </div>
 
             <div>
                 <table className="table table-bordered">
@@ -230,9 +260,9 @@ export default function DevicesForm() {
                                         <td>{e.Type}</td>
                                         <td>{e.LabSerialNumber}</td>
                                         <td>{e.IsActive}</td>
-                                        <td>{e.Lab_Id}</td>
+                                        <td>{e.Devicegroup?.Name}</td>
                                         <td>
-                                            <button className="btn btn-success" onClick={() => editDevice(e.Id, e.DateSync, e.Description, e.FriendlyName, e.Model, e.SerialNumber, e.Type, e.LabSerialNumber, e.IsActive,)}><FontAwesomeIcon icon={faEdit} /></button> &nbsp;
+                                            <button className="btn btn-success" onClick={() => editDevice(e.Id, e.DateSync, e.Description, e.FriendlyName, e.Model, e.SerialNumber, e.Type, e.LabSerialNumber, e.IsActive, e.Devicegroup?.Id)}><FontAwesomeIcon icon={faEdit} /></button> &nbsp;
                                             <button className="btn btn-success" onClick={() => deleteDevice(e.Id)}> <FontAwesomeIcon icon={faTrashAlt} /> </button>
                                         </td>
                                     </tr>
