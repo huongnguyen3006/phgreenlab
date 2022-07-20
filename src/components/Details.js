@@ -47,12 +47,8 @@ export default function Details() {
     }, []);
 
 
-
-
+    var sOptions = []   
     const show2 = async () => {
-
-        var sOptions = []   
-
 
         let queryString = window.location.search
         let params = new URLSearchParams(queryString);
@@ -116,13 +112,12 @@ export default function Details() {
                     categories: date
 
                 },
-            })              
-        }
-
-        console.log(sOptions)
+            })               
+         
+        }    
         setChartOptions(sOptions)
-      
     }
+
 
     return (
         <div className="box">

@@ -14,7 +14,7 @@ export default function DeviceGroup() {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
  
-   // const baseURL = "http://127.0.0.1:3000"
+    //const baseURL = "http://127.0.0.1:3000"
 
     const baseURL = "http://thegreenlab.xyz:3000"
     const [loading, setLoading] = useState(true)
@@ -27,7 +27,7 @@ export default function DeviceGroup() {
                     'Content-Type': 'application/json',
                     'Authorization': 'Basic ' + Token
                 },
-                body: JSON.stringify({ Name: name, Description: description, })
+                body: JSON.stringify({ Name: name, Description: description})
             }).then(data => load())
         }
         else {

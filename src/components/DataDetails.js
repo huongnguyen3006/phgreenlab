@@ -15,7 +15,7 @@ export default function DataDetails() {
     const [ndata, setNdata] = useState([0])
     const [sensorType, setSensorType] = useState('')
     const baseURL = "http://thegreenlab.xyz:3000"
-    //const localURL = "http://127.0.0.1:3000"
+    //const baseURL = "http://127.0.0.1:3000"
     const [chartOptions, setChartOptions] = useState([])
     const [receivedDate, setReceivedDate] = useState('')
 
@@ -35,8 +35,8 @@ export default function DataDetails() {
             headers: { 'Authorization': 'Basic ' + Token }
         })
 
-        const device = await res.json()
-        return device
+        const devices = await res.json()
+        return devices
     }
 
     const show = async (period) => {

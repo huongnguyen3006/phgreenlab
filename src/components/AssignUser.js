@@ -161,8 +161,7 @@ export default function AssignUser() {
   }
 
   return (
-    <div>
-      <div className="container">
+      <div>
         <h3>Users Management</h3>
         <div class="mb-3 mt-3">
           <input type="hidden" value={id} onChange={(e) => setId(e.target.value)} />
@@ -171,12 +170,13 @@ export default function AssignUser() {
           <label >Email:</label>
           <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
         </div>
+
         <div>Select a device</div>
 
         <div className='row'>
           <div className='col-md-5'>
             <input type='text' value={filterText} onChange={(e) => filterLeft(e.target.value)} />
-            <select className="form-select" id="selDevice" multiple="muliple" size='10'>
+            <select className="form-select" id="selDevice" multiple="muliple" size='20'>
               {availableDevices.filter(d => d.SerialNumber !== "").map(s => (<option value={s.Id}>{s.SerialNumber} </option>))}
             </select>
 
@@ -193,13 +193,15 @@ export default function AssignUser() {
             </select>
           </div>
      </div>
-      </div>
-      <div className="btnDeviceForm">
+
+     <div>
         <button class="btn btn-primary"  onClick={() => save()}>Save</button> &nbsp; &nbsp;
         <button class="btn btn-primary"  onClick={() => document.location = '/Users'}>Back</button> &nbsp; &nbsp;
 
       </div>
 
+
+   
     </div>
   )
 }
